@@ -31,6 +31,8 @@ class BaseModel:
             self.updated_at = datetime.now()  # I think this doesn't\
             # need to exist in the requirement: otherwise:\
             # create id and created_at as you did previously (new instance)
+            storage.new(self)
+
 
     def __str__(self):
         """str represention of the class"""
