@@ -36,15 +36,21 @@ class FileStorage:
         class_name = obj.__class__.__name__
         obj_id = obj.id
         key = f"{class_name}.{obj_id}"
-        self.__objects[key] = obj
+        FileStorage.__objects[key] = obj
     def save(self):
         """
         Serializes __objects to JSON file.
         """
+<<<<<<< HEAD
         print(self.__objects.items())
         serialized_objs = {key: value.to_dict() for key, value in self.__objects.items()}
         with open(self.__file_path, "w") as file:
+=======
+        serialized_objs = {key: value.to_dict() for key, value in FileStorage.__objects.items()}
+        with open(FileStorage.__file_path, "w") as file:
+>>>>>>> 335e50ffa7442b7e605d541e7f077ec906f6e2cd
             json.dump(serialized_objs, file)
+
 
     def reload(self):
         """
@@ -53,6 +59,7 @@ class FileStorage:
         - convert the loaded json to BaseModel(args) object to call self.new to add to the __objects
         """
         try:
+<<<<<<< HEAD
             with open(self.__file_path, "r") as f:
                 content = json.load(f)
                 for k, v in content.items():
@@ -63,6 +70,12 @@ class FileStorage:
                     # eval and **v to excute as: classname(**v)
                     my_model = eval(classn)(**v)
                     self.new(my_model)
+=======
+            with open(FileStorage.__file_path, "r") as f:
+                if f is None:
+                    return
+                FileStorage.__objects = json.loads(f.read())
+>>>>>>> 335e50ffa7442b7e605d541e7f077ec906f6e2cd
         except FileNotFoundError:
             return    
     # end def
