@@ -54,6 +54,6 @@ class FileStorage:
                 if f is None:
                     return
                 self.__objects = json.loads(f.read())
-        except IOError:
+        except FileNotFoundError:
             return    
     # end def
