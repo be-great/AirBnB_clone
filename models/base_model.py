@@ -25,9 +25,12 @@ class BaseModel:
                             datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
                 else:
                     setattr(self, key, value)
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()  # I think this doesn't\
+            # need to exist in the requirement: otherwise:\
+            # create id and created_at as you did previously (new instance)
 
     def __str__(self):
         """str represention of the class"""
