@@ -22,7 +22,7 @@ class FileStorage:
         Returns:
             dict: Dictionary containing all stored objects.
         """
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """
