@@ -48,13 +48,21 @@ class FileStorage:
 
     def reload(self):
         """
-        deserializes the JSON file to __objects
+        deserializes the JSON file to __objects :
+        - file.json => BaseModel(args) => self.new()
+        - convert the loaded json to BaseModel(args) object to call self.new to add to the __objects
         """
         try:
             with open(self.__file_path, "r") as f:
-                if f is None:
-                    return
-                self.__objects = json.loads(f.read())
+                content = json.load(f)
+                for k, v in content.items():
+                    # get the class name
+                    classn = v["__class__"]
+                    # delete the __class__ attribute becasue it going to created in self.new
+                    del v["__class__"]
+                    # eval and **v to excute as: classname(**v)
+                    my_model = eval(classn)(**v)
+                    self.new(my_model)
         except FileNotFoundError:
             return    
     # end def
