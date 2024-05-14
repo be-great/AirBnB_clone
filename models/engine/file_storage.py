@@ -22,7 +22,7 @@ class FileStorage:
         Returns:
             dict: Dictionary containing all stored objects.
         """
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """
@@ -48,13 +48,11 @@ class FileStorage:
 
     def reload(self):
         """
-        deserializes the JSON file to __objects
+        Deserializes the JSON file to __objects
         """
         try:
             with open(FileStorage.__file_path, "r") as f:
-                if f is None:
-                    return
                 FileStorage.__objects = json.loads(f.read())
         except FileNotFoundError:
-            return    
+            return
     # end def
