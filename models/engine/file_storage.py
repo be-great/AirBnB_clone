@@ -44,3 +44,16 @@ class FileStorage:
         serialized_objs = {key: value.to_dict() for key, value in self.__objects.items()}
         with open(self.__file_path, "w") as file:
             json.dump(serialized_objs, file)
+
+    def reload(self):
+        """
+        deserializes the JSON file to __objects
+        """
+        try:
+            with open(self.__file_path, "r") as f:
+                if f is None:
+                    return
+                self.__objects = json.loads(f.read())
+        except IOError:
+            return    
+    # end def
