@@ -29,4 +29,7 @@ class FileStorage:
             It must have an attribute named 'id'.
         """
 
-        self.__objects[obj.__class__.__name__.id] = obj
+        class_name = obj.__class__.__name__
+        obj_id = obj.id
+        key = f"{class_name.obj_id}"
+        self.__objects[key] = obj
