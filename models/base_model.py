@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 
 """
 class BaseModel that defines all common attributes/methods for other classes:
@@ -32,7 +33,6 @@ class BaseModel:
             # need to exist in the requirement: otherwise:\
             # create id and created_at as you did previously (new instance)
             storage.new(self)
-
 
     def __str__(self):
         """str represention of the class"""
