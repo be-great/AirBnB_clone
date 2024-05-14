@@ -60,8 +60,9 @@ class FileStorage:
                     classn = v["__class__"]
                     # delete the __class__ attribute becasue it going to created in self.new
                     del v["__class__"]
-                    # eval and **v to excute as: classname(**v)
-                    my_model = eval(classn)(**v)
+                    # eval and **v to excute as: classname(key=value, key=value,...)
+                    classn = classn + "(**v)"
+                    my_model = eval(classn)
                     self.new(my_model)
         except FileNotFoundError:
             return    
