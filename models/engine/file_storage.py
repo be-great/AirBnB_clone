@@ -2,8 +2,8 @@
 """Defines the FileStorage class."""
 
 
-from ..base_model import BaseModel
-
+from models.base_model import BaseModel
+import json
 
 class FileStorage:
     """
@@ -37,3 +37,13 @@ class FileStorage:
         obj_id = obj.id
         key = f"{class_name}.{obj_id}"
         self.__objects[key] = obj
+    def save(self):
+        """
+        Serializes __objects to JSON file.
+        """
+        serialized_objs = {key: value.to_dict() for key, value in self.__objects.items()}
+        with open(self.__file_path, "w") as file:
+            json.dump(serialized_objs, file)
+
+
+

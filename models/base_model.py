@@ -5,7 +5,7 @@ class BaseModel that defines all common attributes/methods for other classes:
 """
 from datetime import datetime
 from uuid import uuid4
-from models.__init__ import storage
+import models
 
 
 class BaseModel:
@@ -32,7 +32,7 @@ class BaseModel:
             self.updated_at = datetime.now()  # I think this doesn't\
             # need to exist in the requirement: otherwise:\
             # create id and created_at as you did previously (new instance)
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """str represention of the class"""
@@ -42,6 +42,7 @@ class BaseModel:
         """updates the public instance attribute updated_at"""
         """with the current datetime"""
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """returns a dictionary containing all keys/values"""
