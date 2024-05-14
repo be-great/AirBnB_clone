@@ -31,5 +31,5 @@ class FileStorage:
 
         class_name = obj.__class__.__name__
         obj_id = obj.id
-        key = f"{class_name.obj_id}"
+        key = f"{class_name}.{obj_id}"
         self.__objects[key] = obj
