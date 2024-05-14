@@ -41,6 +41,7 @@ class FileStorage:
         """
         Serializes __objects to JSON file.
         """
+        print(self.__objects.items())
         serialized_objs = {key: value.to_dict() for key, value in self.__objects.items()}
         with open(self.__file_path, "w") as file:
             json.dump(serialized_objs, file)
@@ -51,9 +52,9 @@ class FileStorage:
         """
         try:
             with open(self.__file_path, "r") as f:
-                if f is None:
-                    return
-                self.__objects = json.loads(f.read())
-        except IOError:
+                objects = json.load(f)
+                for obj in objects.values():
+                    
+        except FileNotFoundError:
             return    
     # end def
