@@ -1,5 +1,6 @@
 from ..base_model import BaseModel
 
+
 class FileStorage:
     """
     This class provides functionality for storing and retrieving objects
@@ -18,4 +19,14 @@ class FileStorage:
             dict: Dictionary containing all stored objects.
         """
         return self.__objects
-        
+
+    def new(self, obj):
+        """
+        Adds a new object to the storage.
+
+        Args:
+            obj: Object to be added to storage.
+            It must have an attribute named 'id'.
+        """
+
+        self.__objects[obj.__class__.__name__.id] = obj
