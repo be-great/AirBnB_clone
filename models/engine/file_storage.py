@@ -3,7 +3,9 @@
 
 
 from models.base_model import BaseModel
+from models.user import User
 import json
+
 
 class FileStorage:
     """
@@ -37,6 +39,7 @@ class FileStorage:
         obj_id = obj.id
         key = f"{class_name}.{obj_id}"
         FileStorage.__objects[key] = obj
+
     def save(self):
         """
         Serializes __objects to JSON file.
@@ -44,7 +47,6 @@ class FileStorage:
         serialized_objs = {key: value.to_dict() for key, value in FileStorage.__objects.items()}
         with open(FileStorage.__file_path, "w") as file:
             json.dump(serialized_objs, file)
-
 
     def reload(self):
         """
@@ -65,5 +67,5 @@ class FileStorage:
                     my_model = eval(classn)
                     self.new(my_model)
         except FileNotFoundError:
-            return    
+            return
     # end def
