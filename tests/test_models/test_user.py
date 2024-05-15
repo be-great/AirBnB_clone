@@ -7,6 +7,7 @@ import models
 import unittest
 import datetime
 from models.user import User
+import pep8
 
 
 class TestUser(unittest.TestCase):
@@ -77,3 +78,16 @@ class TestUser(unittest.TestCase):
         created_at = User().created_at
         updated_at = User().updated_at
         self.assertNotEqual(created_at, updated_at)
+
+    """            Test pycodestyle style              """
+    """------------------------------------------------"""
+    def test_pep8_user(self):
+        """Test PEP8 compliance for BaseModel class"""
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['models/base_model.py'])
+        msg = "fix pep8 :" + str(result.messages)
+        self.assertEqual(result.total_errors, 0, msg)
+
+
+if __name__ == '__main__':
+    unittest.main()
