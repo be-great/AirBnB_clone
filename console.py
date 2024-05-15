@@ -11,33 +11,35 @@ def deleteObjectById(id):
     """
     delete from file.json
     """
-    try:
-        with open("file.json", "r") as f:
-            content = json.load(f)
-        key_to_delete = []  # What does this line of code do?
-        new_content = {k: v for k, v in content.items() if v.get("id") != id}
-        if len(new_content) < len(content):
-            with open("file.json", "w") as f:
-                json.dump(new_content, f)
-        return True
-    except FileNotFoundError:
-        return None
-
-
-# read the file
+    all_objs = storage.all()
+    for obj_id in all_objs.keys():
+        obj = all_objs[obj_id]
+        if (obj.to_dict())["id"] == id:
+            del all_objs[obj_id]
+            storage.save()
+            return True
+    return None
 def findObjectById(id):
-    """
-    read file.json file
-    """
-    try:
-        with open("file.json", "r") as f:
-            content = json.load(f)
-            for k, v in content.items():
-                # get the class name
-                if id == v["id"]:
-                    return eval(v["__class__"] + "(**v)")
-    except FileNotFoundError:
-        return None
+    all_objs = storage.all()
+    for obj_id in all_objs.keys():
+        obj = all_objs[obj_id]
+        if (obj.to_dict())["id"] == id:
+            return obj
+    return None
+# # read the file
+# def findObjectById(id):
+#     """
+#     read file.json file
+#     """
+#     try:
+#         with open("file.json", "r") as f:
+#             content = json.load(f)
+#             for k, v in content.items():
+#                 # get the class name
+#                 if id == v["id"]:
+#                     return eval(v["__class__"] + "(**v)")
+#     except FileNotFoundError:
+#         return None
 
 
 class HBNBCommand(cmd.Cmd):
@@ -64,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
         elif arguments[0] not in self.__classnames:
             print("** class doesn't exist **")
         else:
-            obj = BaseModel()
+            obj = eval(arguments[0])()
             obj.save()
             print(obj.id)
 
@@ -106,11 +108,10 @@ class HBNBCommand(cmd.Cmd):
             if arguments[0] not in self.__classnames:
                 print("** class doesn't exist **")
             else:
-
                 all_objs = storage.all()
                 for obj_id in all_objs.keys():
-                    if obj_id == arguments[0]:
-                        obj = all_objs[obj_id]
+                    obj = all_objs[obj_id]
+                    if (obj.to_dict())["__class__"] == arguments[0]:
                         list.append(str(obj))
         else:
             all_objs = storage.all()
@@ -140,7 +141,7 @@ class HBNBCommand(cmd.Cmd):
                 for obj_id in all_objs.keys():
                     obj = all_objs[obj_id]
                     if (obj.to_dict())["id"] == arguments[1]:
-                        setattr(obj, arguments[2], arguments[3])
+                        setattr(obj, arguments[2],arguments[3][1:-1])
                         obj.save()
 
 
