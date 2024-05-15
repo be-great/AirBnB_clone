@@ -4,6 +4,12 @@ import cmd
 import json
 from models.base_model import BaseModel
 from models.user import User
+from models.amenity import Amenity
+from models.place import Place
+from models.city import City
+from models.state import State
+from models.review import Review
+
 from models import storage
 
 
@@ -19,6 +25,8 @@ def deleteObjectById(id):
             storage.save()
             return True
     return None
+
+
 def findObjectById(id):
     all_objs = storage.all()
     for obj_id in all_objs.keys():
@@ -48,7 +56,14 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = '(hbnb) '
-    __classnames = ["BaseModel", "User"]
+    __classnames = ["BaseModel",
+                    "User",
+                    "State",
+                    "City",
+                    "Amenity",
+                    "Place",
+                    "Review"
+                    ]
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -141,7 +156,7 @@ class HBNBCommand(cmd.Cmd):
                 for obj_id in all_objs.keys():
                     obj = all_objs[obj_id]
                     if (obj.to_dict())["id"] == arguments[1]:
-                        setattr(obj, arguments[2],arguments[3][1:-1])
+                        setattr(obj, arguments[2], arguments[3][1:-1])
                         obj.save()
 
 
