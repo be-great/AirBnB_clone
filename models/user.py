@@ -5,7 +5,7 @@ from models.base_model import BaseModel
 
 class User(BaseModel):
     """
-    User class in هnherited from BaseModel class.
+    User class in inherited from BaseModel class.
     """
     # Initialize public class variables
     email = ""
