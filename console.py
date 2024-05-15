@@ -5,13 +5,13 @@ import json
 from models.base_model import BaseModel
 
 
-def deleteobjectbyid(id):
+def deleteObjectById(id):
     """
     delete from file.json
     """
     try:
         with open("file.json", "r") as f:
-            content = json.load(f)        
+            content = json.load(f)
         key_to_delete = []
         new_content = {k: v for k, v in content.items() if v.get("id") != id}
         if len(new_content) < len(content):
@@ -21,8 +21,9 @@ def deleteobjectbyid(id):
     except FileNotFoundError:
         return None
 
+
 # read the file
-def findobjectbyid(id):
+def findObjectById(id):
     """
     read file.json file
     """
@@ -69,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(arguments) < 2:
             print("** instance id missing **")
         else:
-            my_model = findobjectbyid(arguments[1])
+            my_model = findObjectById(arguments[1])
             if my_model is None:
                 print("** no instance found **")
             else:
@@ -86,15 +87,15 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             # delete the my_model
-            my_model = deleteobjectbyid(arguments[1])
+            my_model = deleteObjectById(arguments[1])
             if my_model is None:
                 print("** no instance found **")
 
     def do_all(self, arg):
         pass
+
     def do_update(self, arg):
         pass
-
 
 
 if __name__ == '__main__':
