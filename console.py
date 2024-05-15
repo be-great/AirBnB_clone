@@ -3,7 +3,7 @@
 import cmd
 import json
 from models.base_model import BaseModel
-
+from models import storage
 
 def deleteObjectById(id):
     """
@@ -82,7 +82,6 @@ class HBNBCommand(cmd.Cmd):
         if len(arguments) < 1:
             print("** class name missing **")
         elif arguments[0] not in self.__classnames:
-            print("** class doesn't exist **")if arguments[0] not in self.__classnames:
             print("** class doesn't exist **")
         elif len(arguments) < 2:
             print("** instance id missing **")
@@ -93,21 +92,45 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, arg):
-<<<<<<< HEAD
         arguments = arg.split()
-        # search the id
-        if len(arguments) > 1:
+        list = []
+        if len(arguments) >= 1:
             if arguments[0] not in self.__classnames:
                 print("** class doesn't exist **")
             else:
-                
+
+                all_objs = storage.all()
+                for obj_id in all_objs.keys():
+                    if obj_id == arguments[0]:
+                        obj = all_objs[obj_id]
+                        list.append(str(obj))
         else:
-=======
-        pass
->>>>>>> 959fad9a55d2c9125888c9f4b2b2b20e750cb0ba
+            all_objs = storage.all()
+            for obj_id in all_objs.keys():
+                obj = all_objs[obj_id]
+                list.append(str(obj))
+        print(list)
 
     def do_update(self, arg):
-        pass
+        arguments = arg.split()
+        if len(arguments) < 1:
+            print("** class name missing **")
+        elif arguments[0] not in self.__classnames:
+            print("** class doesn't exist **")
+        elif len(arguments) < 2:
+            print("** instance id missing **")
+        else:
+            my_model = findObjectById(arguments[1])
+            if my_model is None:
+                print("** no instance found **")
+            elif len(arguments) < 3:
+                print("** attribute name missing **")
+            elif len(arguments) < 4:
+                print("** value missing **")
+            else:
+                setattr(my_model, arguments[2], arguments[3])
+                my_model.save()
+                
 
 
 if __name__ == '__main__':
