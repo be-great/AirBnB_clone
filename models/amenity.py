@@ -3,9 +3,9 @@
 from models.base_model import BaseModel
 
 
-class State(BaseModel):
+class Amenity(BaseModel):
     """
-    State class in هnherited from BaseModel class.
+    Amenity class in هnherited from BaseModel class.
     """
     # Initialize public class variables
     name = ""

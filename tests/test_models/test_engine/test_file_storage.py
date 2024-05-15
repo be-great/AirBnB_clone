@@ -9,6 +9,7 @@ from datetime import datetime
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
+
 class TestFileStorage(unittest.TestCase):
     """Test cases for the FileStorage class."""
 
@@ -20,7 +21,8 @@ class TestFileStorage(unittest.TestCase):
 
     def testObjectOfFileStorageWithArg(self):
         """
-        test an object of FileStorage is instance of FileStorage class with None
+        test an object of FileStorage is instance of
+        FileStorage class with None
         """
         with self.assertRaises(TypeError):
             FileStorage(None)

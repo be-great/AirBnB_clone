@@ -44,7 +44,8 @@ class FileStorage:
         """
         Serializes __objects to JSON file.
         """
-        serialized_objs = {key: value.to_dict() for key, value in FileStorage.__objects.items()}
+        serialized_objs = {key: value.to_dict() for key,
+                           value in FileStorage.__objects.items()}
         with open(FileStorage.__file_path, "w") as file:
             json.dump(serialized_objs, file)
 
@@ -52,7 +53,8 @@ class FileStorage:
         """
         deserializes the JSON file to __objects :
         - file.json => BaseModel(args) => self.new()
-        - convert the loaded json to BaseModel(args) object to call self.new to add to the __objects
+        - convert the loaded json to BaseModel(args)
+          object to call self.new to add to the __objects
         """
         try:
             with open(self.__file_path, "r") as f:
@@ -60,9 +62,11 @@ class FileStorage:
                 for k, v in content.items():
                     # get the class name
                     classn = v["__class__"]
-                    # delete the __class__ attribute becasue it going to created in self.new
+                    # delete the __class__ attribute becasue
+                    # it going to created in self.new
                     del v["__class__"]
-                    # eval and **v to excute as: classname(key=value, key=value,...)
+                    # eval and **v to excute as:
+                    # classname(key=value, key=value,...)
                     classn = classn + "(**v)"
                     my_model = eval(classn)
                     self.new(my_model)

@@ -3,9 +3,11 @@
 from models.base_model import BaseModel
 
 
-class State(BaseModel):
+class Review(BaseModel):
     """
-    State class in هnherited from BaseModel class.
+    Review class in هnherited from BaseModel class.
     """
     # Initialize public class variables
-    name = ""
+    place_id = ""
+    user_id = ""
+    text = ""
