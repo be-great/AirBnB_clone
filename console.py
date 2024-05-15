@@ -81,6 +81,7 @@ class HBNBCommand(cmd.Cmd):
         if len(arguments) < 1:
             print("** class name missing **")
         elif arguments[0] not in self.__classnames:
+            print("** class doesn't exist **")if arguments[0] not in self.__classnames:
             print("** class doesn't exist **")
         elif len(arguments) < 2:
             print("** instance id missing **")
@@ -91,7 +92,15 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, arg):
-        pass
+        arguments = arg.split()
+        # search the id
+        if len(arguments) > 1:
+            if arguments[0] not in self.__classnames:
+                print("** class doesn't exist **")
+            else:
+                
+        else:
+
     def do_update(self, arg):
         pass
 
