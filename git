@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# A script to doing git stuff
+
+git add .
+
+echo "Enter your commit message: "
+read commit
+git commit -m"$commit"
+git push

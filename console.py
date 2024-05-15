@@ -3,7 +3,9 @@
 import cmd
 import json
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
+
 
 def deleteObjectById(id):
     """
@@ -12,7 +14,7 @@ def deleteObjectById(id):
     try:
         with open("file.json", "r") as f:
             content = json.load(f)
-        key_to_delete = []
+        key_to_delete = []  # What does this line of code do?
         new_content = {k: v for k, v in content.items() if v.get("id") != id}
         if len(new_content) < len(content):
             with open("file.json", "w") as f:
@@ -44,10 +46,15 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = '(hbnb) '
-    __classnames = ["BaseModel"]
+    __classnames = ["BaseModel", "User"]
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
+        return True
+
+    def do_EOF(self, arg):
+        """EOF command to exit the program"""
+        print("")  # Add a newline for better formatting
         return True
 
     def do_create(self, arg):
@@ -59,13 +66,14 @@ class HBNBCommand(cmd.Cmd):
         else:
             obj = BaseModel()
             obj.save()
+            print(obj.id)
 
     def do_show(self, arg):
         arguments = arg.split()
         # search the id
         if len(arguments) < 1:
             print("** class name missing **")
-        elif arguments[0] not in self.__classnames:
+        elif arguments[0] not in HBNBCommand.__classnames:
             print("** class doesn't exist **")
         elif len(arguments) < 2:
             print("** instance id missing **")
