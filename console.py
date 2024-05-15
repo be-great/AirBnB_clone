@@ -12,7 +12,7 @@ def deleteObjectById(id):
     try:
         with open("file.json", "r") as f:
             content = json.load(f)
-        key_to_delete = []
+        key_to_delete = []  # What does this line of code do?
         new_content = {k: v for k, v in content.items() if v.get("id") != id}
         if len(new_content) < len(content):
             with open("file.json", "w") as f:
@@ -48,6 +48,11 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
+        return True
+
+    def do_EOF(self, arg):
+        """EOF command to exit the program"""
+        print("")  # Add a newline for better formatting
         return True
 
     def do_create(self, arg):
