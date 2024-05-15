@@ -3,6 +3,8 @@
 import cmd
 import json
 from models.base_model import BaseModel
+from models.user import User
+from models import storage
 
 
 def deleteObjectById(id):
@@ -44,7 +46,7 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = '(hbnb) '
-    __classnames = ["BaseModel"]
+    __classnames = ["BaseModel", "User"]
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -64,13 +66,14 @@ class HBNBCommand(cmd.Cmd):
         else:
             obj = BaseModel()
             obj.save()
+            print(obj.id)
 
     def do_show(self, arg):
         arguments = arg.split()
         # search the id
         if len(arguments) < 1:
             print("** class name missing **")
-        elif arguments[0] not in self.__classnames:
+        elif arguments[0] not in HBNBCommand.__classnames:
             print("** class doesn't exist **")
         elif len(arguments) < 2:
             print("** instance id missing **")
