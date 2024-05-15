@@ -136,9 +136,12 @@ class HBNBCommand(cmd.Cmd):
             elif len(arguments) < 4:
                 print("** value missing **")
             else:
-                setattr(my_model, arguments[2], arguments[3])
-                my_model.save()
-                
+                all_objs = storage.all()
+                for obj_id in all_objs.keys():
+                    obj = all_objs[obj_id]
+                    if (obj.to_dict())["id"] == arguments[1]:
+                        setattr(obj, arguments[2], arguments[3])
+                        obj.save()
 
 
 if __name__ == '__main__':
