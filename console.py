@@ -45,7 +45,7 @@ class HBNBCommand(cmd.Cmd):
     Defines the HolbertonBnB command interpreter.
     """
 
-    prompt = '(hbnb) '
+    prompt = "(hbnb) "
     __classnames = ["BaseModel", "User"]
 
     def do_quit(self, arg):
@@ -61,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
         arguments = arg.split()
         if len(arguments) < 1:
             print("** class name missing **")
-        elif arguments[0] not in self.__classnames:
+        elif arguments[0] not in HBNBCommand.__classnames:
             print("** class doesn't exist **")
         else:
             obj = BaseModel()
@@ -103,7 +103,7 @@ class HBNBCommand(cmd.Cmd):
         arguments = arg.split()
         list = []
         if len(arguments) >= 1:
-            if arguments[0] not in self.__classnames:
+            if arguments[0] not in HBNBCommand.__classnames:
                 print("** class doesn't exist **")
             else:
 
@@ -144,5 +144,5 @@ class HBNBCommand(cmd.Cmd):
                         obj.save()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     HBNBCommand().cmdloop()
