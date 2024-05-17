@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.9
 """Defines the HBnB console."""
 import cmd
 import json
@@ -9,7 +9,6 @@ from models.place import Place
 from models.city import City
 from models.state import State
 from models.review import Review
-
 from models import storage
 
 
@@ -49,7 +48,6 @@ def findObjectById(id):
 #     except FileNotFoundError:
 #         return None
 
-
 class HBNBCommand(cmd.Cmd):
     """
     Defines the HolbertonBnB command interpreter.
@@ -65,6 +63,7 @@ class HBNBCommand(cmd.Cmd):
                     "Review"
                     ]
 
+
     def default(self, arg):
         subcommands = ["all",
                        "count"]
@@ -76,59 +75,9 @@ class HBNBCommand(cmd.Cmd):
                 function = f'self.do_{methodname}("{classname}")'
                 eval(function)
 
-    def do_quit(self, arg):
-        """Quit command to exit the program"""
-        return True
 
-    def do_EOF(self, arg):
-        """EOF command to exit the program"""
-        print("")  # Add a newline for better formatting
-        return True
-
-    def do_create(self, arg):
-        arguments = arg.split()
-        if len(arguments) < 1:
-            print("** class name missing **")
-        elif arguments[0] not in self.__classnames:
-            print("** class doesn't exist **")
-        else:
-            obj = eval(arguments[0])()
-            obj.save()
-            print(obj.id)
-
-    def do_show(self, arg):
-        arguments = arg.split()
-        # search the id
-        if len(arguments) < 1:
-            print("** class name missing **")
-        elif arguments[0] not in HBNBCommand.__classnames:
-            print("** class doesn't exist **")
-        elif len(arguments) < 2:
-            print("** instance id missing **")
-        else:
-            my_model = findObjectById(arguments[1])
-            if my_model is None:
-                print("** no instance found **")
-            else:
-                print(my_model)
-
-    def do_destroy(self, arg):
-        arguments = arg.split()
-        # search the id
-        if len(arguments) < 1:
-            print("** class name missing **")
-        elif arguments[0] not in self.__classnames:
-            print("** class doesn't exist **")
-        elif len(arguments) < 2:
-            print("** instance id missing **")
-        else:
-            # delete the my_model
-            my_model = deleteObjectById(arguments[1])
-            if my_model is None:
-                print("** no instance found **")
 
     def do_all(self, arg):
-        
         arguments = arg.split()
         list = []
         if len(arguments) >= 1:
@@ -147,29 +96,6 @@ class HBNBCommand(cmd.Cmd):
                 list.append(str(obj))
         print(list)
 
-    def do_update(self, arg):
-        arguments = arg.split()
-        if len(arguments) < 1:
-            print("** class name missing **")
-        elif arguments[0] not in self.__classnames:
-            print("** class doesn't exist **")
-        elif len(arguments) < 2:
-            print("** instance id missing **")
-        else:
-            my_model = findObjectById(arguments[1])
-            if my_model is None:
-                print("** no instance found **")
-            elif len(arguments) < 3:
-                print("** attribute name missing **")
-            elif len(arguments) < 4:
-                print("** value missing **")
-            else:
-                all_objs = storage.all()
-                for obj_id in all_objs.keys():
-                    obj = all_objs[obj_id]
-                    if (obj.to_dict())["id"] == arguments[1]:
-                        setattr(obj, arguments[2], arguments[3][1:-1])
-                        obj.save()
     def do_count(self, arg):
         arguments = arg.split()
         list = []
