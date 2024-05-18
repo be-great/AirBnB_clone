@@ -62,11 +62,15 @@ class TestState(unittest.TestCase):
         }
         state = State(**state_data)
         str_repr = str(state)
-        expected_str = "[State] (123) {'id': '123', 'created_at': '2022-05-20T10:00:00', 'updated_at': '2022-05-20T10:00:00', 'name': 'California'}"
+        s0 = "[State] (123) {'id': '123', "
+        s1 = "'created_at': '2022-05-20T10:00:00', "
+        s2 = "'updated_at': '2022-05-20T10:00:00', 'name': 'California'}"
+        expected_str = s0 + s1 + s2
         self.assertEqual(str_repr, expected_str)
 
     def test_instance_with_additional_attributes(self):
-        """Test if an instance of State is created with additional attributes."""
+        """Test if an instance of State is created"""
+        """with additional attributes."""
         state_data = {
             'id': '123',
             'created_at': datetime(2022, 5, 20, 10, 0, 0),
@@ -82,7 +86,8 @@ class TestState(unittest.TestCase):
         self.assertEqual(state.area, 163696)
 
     def test_invalid_instance_creation(self):
-        """Test if an instance of State is not created with invalid attributes."""
+        """Test if an instance of State is"""
+        """not created with invalid attributes."""
         with self.assertRaises(TypeError):
             state = State(invalid_arg='value')
 

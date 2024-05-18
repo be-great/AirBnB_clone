@@ -65,6 +65,8 @@ class HBNBCommand(cmd.Cmd):
                     "Review"
                     ]
 
+<<<<<<< HEAD
+=======
     def default(self, arg):
         subcommands = {
             "all": self.do_all,
@@ -88,6 +90,7 @@ class HBNBCommand(cmd.Cmd):
         print("*** Unknown syntax: ()".format(parts))
         return False
 
+>>>>>>> 4fe3d6421388159874e6ca4896fc705f7044321c
     def do_quit(self, arg):
         """Quit command to exit the program"""
         print()
