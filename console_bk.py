@@ -28,8 +28,6 @@ def deleteObjectById(id):
 
 
 def findObjectById(id):
-    id = id.strip('\"\'')
-
     all_objs = storage.all()
     for obj_id in all_objs.keys():
         obj = all_objs[obj_id]
@@ -81,16 +79,16 @@ class HBNBCommand(cmd.Cmd):
         # passing the classname as an argument
 
         parts = arg.split(".")
-        print(parts)
-        if len(parts) > 1 and parts[1] != "":
+        if len(parts) > 1:
             classname = parts[0]
             args = parts[1].split("(")
             methodname = args[0]
-            extraArg = args[1].split(")")[0]
+            # number inside "" and work without "" try it
+            idArg = parts[1].split("(")[1].split(")")[0]
             allArgs = args[1].split(")")[0].split(",")
             if methodname in subcommands.keys():
                 if methodname != "update":
-                    return subcommands[methodname]("{} {}".format(classname, extraArg))
+                    return subcommands[methodname](f"{classname} {idArg}")
                 else:
                     idArg = allArgs[0]
                     attrName = allArgs[1]
@@ -100,9 +98,8 @@ class HBNBCommand(cmd.Cmd):
                                                                 idArg,
                                                                 attrName,
                                                                 attrValue))
-        else:
-            print("*** Unknown syntax: ()".format(parts))
-            return False
+        print("*** Unknown syntax: ()".format(parts))
+        return False
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -152,7 +149,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             # delete the my_model
-            my_model = deleteObjectById(arguments[1].strip('\"\''))
+            my_model = deleteObjectById(arguments[1])
             if my_model is None:
                 print("** no instance found **")
 
@@ -176,8 +173,31 @@ class HBNBCommand(cmd.Cmd):
                 list.append(str(obj))
         print(list)
 
+    # def do_update(self, arg):
+    #     arguments = arg.split()
+    #     if len(arguments) < 1:
+    #         print("** class name missing **")
+    #     elif arguments[0] not in self.__classnames:
+    #         print("** class doesn't exist **")
+    #     elif len(arguments) < 2:
+    #         print("** instance id missing **")
+    #     else:
+    #         my_model = findObjectById(arguments[1])
+    #         if my_model is None:
+    #             print("** no instance found **")
+    #         elif len(arguments) < 3:
+    #             print("** attribute name missing **")
+    #         elif len(arguments) < 4:
+    #             print("** value missing **")
+    #         else:
+    #             all_objs = storage.all()
+    #             for obj_id in all_objs.keys():
+    #                 obj = all_objs[obj_id]
+    #                 if (obj.to_dict())["id"] == arguments[1]:
+    #                     setattr(obj, arguments[2], arguments[3][1:-1])
+    #                     obj.save()
     def do_update(self, arg):
-        arguments = arg.split()
+        arguments = arg.split(" ", 2)
         if len(arguments) < 1:
             print("** class name missing **")
         elif arguments[0] not in self.__classnames:
@@ -190,15 +210,17 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
             elif len(arguments) < 3:
                 print("** attribute name missing **")
-            elif len(arguments) < 4:
-                print("** value missing **")
             else:
-                all_objs = storage.all()
-                for obj_id in all_objs.keys():
-                    obj = all_objs[obj_id]
-                    if (obj.to_dict())["id"] == arguments[1]:
-                        setattr(obj, arguments[2], arguments[3][1:-1])
-                        obj.save()
+                if "{" in arguments[2] and "}" in arguments[2]:
+                    attr_dict = eval(arguments[2])
+                    if isinstance(attr_dict, dict):
+                        for key, value in attr_dict.items():
+                            setattr(my_model, key, value)
+                        my_model.save()
+                else:
+                    attr_name, attr_value = arguments[2].split()
+                    setattr(my_model, attr_name, attr_value.strip('"'))
+                    my_model.save()
 
     def do_count(self, arg):
         countOfInstances = 0
