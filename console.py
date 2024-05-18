@@ -68,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
     def default(self, arg):
         subcommands = {
             "all": self.do_all,
-            "show": self.do_count,
+            "show": self.do_show,
             "destroy": self.do_destroy,
             "update": self.do_update,
             "count": self.do_count}
@@ -81,14 +81,16 @@ class HBNBCommand(cmd.Cmd):
         parts = arg.split(".")
         if len(parts) > 1:
             classname = parts[0]
-            methodname = parts[1][:-2]
+            methodname = parts[1].split("(")[0]
+            idArg = parts[1].split("(")[1].split(")")[0] ## The problem is this method not work if id number inside "" and work without "" try it
             if methodname in subcommands.keys():
-                return subcommands[methodname](f"{classname} ")
+                return subcommands[methodname](f"{classname} {idArg}")
         print("*** Unknown syntax: ()".format(parts))
         return False
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
+        print()
         return True
 
     def do_EOF(self, arg):
@@ -183,17 +185,24 @@ class HBNBCommand(cmd.Cmd):
                         obj.save()
 
     def do_count(self, arg):
+        countOfInstances = 0
         arguments = arg.split()
-        list = []
-        if arguments[0] not in self.__classnames:
-            print("** class doesn't exist **")
+        if arguments:
+            if arguments[0] not in self.__classnames:
+                # if class name passed but not exist
+                print("** class doesn't exist **")
+            else:
+                all_objs = storage.all()
+                for obj_class in all_objs.keys():
+                    obj = all_objs[obj_class]
+                    # Check if the object's class matches the specified class
+                    if (obj.to_dict())["__class__"] == arguments[0]:
+                        countOfInstances += 1  # Increment the counter if their
+                        # class matches
+                print(countOfInstances)
         else:
-            all_objs = storage.all()
-            for obj_id in all_objs.keys():
-                obj = all_objs[obj_id]
-                if (obj.to_dict())["__class__"] == arguments[0]:
-                    list.append(str(obj))
-        print(len(list))
+            # If no class name passed
+            print("** class name missing **")
 
 
 if __name__ == '__main__':
