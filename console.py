@@ -82,19 +82,26 @@ class HBNBCommand(cmd.Cmd):
         if len(parts) > 1:
             classname = parts[0]
             args = parts[1].split("(")
+<<<<<<< HEAD
             # The problem is this method not work if id
+=======
+>>>>>>> 179a1805796334b1052f140148681814e491534a
             methodname = args[0]
             # number inside "" and work without "" try it
-            # idArg = parts[1].split("(")[1].split(")")[0]
-            argsAfter = args[1].split(")")[0]
-            allArgs = argsAfter.split(",")
-            idArg = allArgs[0]
+            idArg = parts[1].split("(")[1].split(")")[0]
+            allArgs = args[1].split(")")[0].split(",")
             if methodname in subcommands.keys():
                 if methodname != "update":
                     return subcommands[methodname](f"{classname} {idArg}")
                 else:
-                    # attrName = args
-                    return
+                    idArg = allArgs[0]
+                    attrName = allArgs[1]
+                    attrValue = allArgs[2]
+                    return subcommands[methodname]("{} {} {} {}".format(
+                                                                classname,
+                                                                idArg,
+                                                                attrName,
+                                                                attrValue))
         print("*** Unknown syntax: ()".format(parts))
         return False
 
