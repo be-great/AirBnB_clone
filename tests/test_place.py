@@ -78,8 +78,8 @@ class TestPlace(unittest.TestCase):
         """Test the JSON deserialization of Place."""
         place_json = {
             'id': '123',
-            'created_at': '2022-05-20T10:00:00',
-            'updated_at': '2022-05-20T10:00:00',
+            'created_at': "2022-05-20T10:00:00.000000",
+            'updated_at': "2022-05-20T10:00:00.000000",
             'city_id': '456',
             'user_id': '789',
             'name': 'Test Place',

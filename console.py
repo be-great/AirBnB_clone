@@ -82,7 +82,8 @@ class HBNBCommand(cmd.Cmd):
         if len(parts) > 1:
             classname = parts[0]
             args = parts[1].split("(")
-            methodname = args[0]            # The problem is this method not work if id
+            # The problem is this method not work if id
+            methodname = args[0]
             # number inside "" and work without "" try it
             # idArg = parts[1].split("(")[1].split(")")[0]
             argsAfter = args[1].split(")")[0]

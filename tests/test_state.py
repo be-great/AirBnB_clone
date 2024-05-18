@@ -64,8 +64,9 @@ class TestState(unittest.TestCase):
         str_repr = str(state)
         s0 = "[State] (123) {'id': '123', "
         s1 = "'created_at': datetime.datetime(2022, 5, 20, 10, 0), "
-        s2 = "'updated_at': datetime.datetime(2022, 5, 20, 10, 0), 'name': 'California'}"
-        expected_str = s0 + s1 + s2
+        s2 = "'updated_at': datetime.datetime(2022, 5, 20, 10, 0),"
+        s4 = " 'name': 'California'}"
+        expected_str = s0 + s1 + s2 + s4
         self.assertEqual(str_repr, expected_str)
 
     def test_instance_with_additional_attributes(self):
