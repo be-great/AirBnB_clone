@@ -20,8 +20,8 @@ class TestState(unittest.TestCase):
         """Test if an instance of State is created with attributes."""
         state_data = {
             'id': '123',
-            'created_at': datetime(2022, 5, 20, 10, 0, 0),
-            'updated_at': datetime(2022, 5, 20, 10, 0, 0),
+            'created_at': "2022-05-20T10:00:00.000000",
+            'updated_at': "2022-05-20T10:00:00.000000",
             'name': 'California'
         }
         state = State(**state_data)
@@ -40,8 +40,8 @@ class TestState(unittest.TestCase):
         """Test if the to_dict() method returns the expected dictionary."""
         state_data = {
             'id': '123',
-            'created_at': datetime(2022, 5, 20, 10, 0, 0),
-            'updated_at': datetime(2022, 5, 20, 10, 0, 0),
+            'created_at': "2022-05-20T10:00:00.000000",
+            'updated_at': "2022-05-20T10:00:00.000000",
             'name': 'California'
         }
         state = State(**state_data)
@@ -56,15 +56,15 @@ class TestState(unittest.TestCase):
         """Test if the __str__() method returns the expected string."""
         state_data = {
             'id': '123',
-            'created_at': datetime(2022, 5, 20, 10, 0, 0),
-            'updated_at': datetime(2022, 5, 20, 10, 0, 0),
+            'created_at': "2022-05-20T10:00:00.000000",
+            'updated_at': "2022-05-20T10:00:00.000000",
             'name': 'California'
         }
         state = State(**state_data)
         str_repr = str(state)
         s0 = "[State] (123) {'id': '123', "
-        s1 = "'created_at': '2022-05-20T10:00:00', "
-        s2 = "'updated_at': '2022-05-20T10:00:00', 'name': 'California'}"
+        s1 = "'created_at': datetime.datetime(2022, 5, 20, 10, 0), "
+        s2 = "'updated_at': datetime.datetime(2022, 5, 20, 10, 0), 'name': 'California'}"
         expected_str = s0 + s1 + s2
         self.assertEqual(str_repr, expected_str)
 
@@ -73,8 +73,8 @@ class TestState(unittest.TestCase):
         """with additional attributes."""
         state_data = {
             'id': '123',
-            'created_at': datetime(2022, 5, 20, 10, 0, 0),
-            'updated_at': datetime(2022, 5, 20, 10, 0, 0),
+            'created_at': "2022-05-20T10:00:00.000000",
+            'updated_at': "2022-05-20T10:00:00.000000",
             'name': 'California',
             'population': 10000000,
             'area': 163696
