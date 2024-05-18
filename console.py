@@ -66,15 +66,26 @@ class HBNBCommand(cmd.Cmd):
                     ]
 
     def default(self, arg):
-        subcommands = ["all",
-                       "count"]
+        subcommands = {
+            "all": self.do_all,
+            "show": self.do_count,
+            "destroy": self.do_destroy,
+            "update": self.do_update,
+            "count": self.do_count}
+        # This way is easer than old way
+        # How it's work:
+        # A dictionary mapping subcommand names to their corresponding methods
+        # Call the corresponding method from the subcommands dictionary,
+        # passing the classname as an argument
+
         parts = arg.split(".")
         if len(parts) > 1:
             classname = parts[0]
             methodname = parts[1][:-2]
-            if methodname in subcommands:
-                function = f'self.do_{methodname}("{classname}")'
-                eval(function)
+            if methodname in subcommands.keys():
+                return subcommands[methodname](f"{classname} ")
+        print("*** Unknown syntax: ()".format(parts))
+        return False
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
