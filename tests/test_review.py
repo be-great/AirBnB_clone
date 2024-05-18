@@ -76,11 +76,15 @@ class TestReview(unittest.TestCase):
         }
         review = Review(**review_data)
         str_repr = str(review)
-        expected_str = "[Review] (123) {'id': '123', 'created_at': '2022-05-20T10:00:00', 'updated_at': '2022-05-20T10:00:00', 'place_id': '456', 'user_id': '789', 'text': 'Nice place!'}"
+        s0 = "[Review] (123) {'id': '123', 'created_at': '2022-05-20T10:00:"
+        s1 = "00', 'updated_at': '2022-05-20T10:00:00',"
+        s2 = " 'place_id': '456', 'user_id': '789', 'text': 'Nice place!'}"
+        expected_str = s0 + s1 + s2
         self.assertEqual(str_repr, expected_str)
 
     def test_instance_with_additional_attributes(self):
-        """Test if an instance of Review is created with additional attributes."""
+        """Test if an instance of Review is created"""
+        """with additional attributes."""
         review_data = {
             'id': '123',
             'created_at': datetime(2022, 5, 20, 10, 0, 0),
@@ -95,7 +99,8 @@ class TestReview(unittest.TestCase):
         self.assertEqual(review.rating, 5)
 
     def test_invalid_instance_creation(self):
-        """Test if an instance of Review is not created with invalid attributes."""
+        """Test if an instance of Review is"""
+        """not created with invalid attributes."""
         with self.assertRaises(TypeError):
             review = Review(invalid_arg='value')
 

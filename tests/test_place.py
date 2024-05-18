@@ -17,8 +17,10 @@ class TestPlace(unittest.TestCase):
         """Test if Place instance has the expected attributes."""
         place = Place()
         attributes = ['id', 'created_at', 'updated_at', 'city_id', 'user_id',
-                      'name', 'description', 'number_rooms', 'number_bathrooms',
-                      'max_guest', 'price_by_night', 'latitude', 'longitude',
+                      'name', 'description', 'number_rooms',
+                      'number_bathrooms',
+                      'max_guest', 'price_by_night', 'latitude',
+                      'longitude',
                       'amenity_ids']
         for attribute in attributes:
             self.assertTrue(hasattr(place, attribute))
@@ -63,9 +65,12 @@ class TestPlace(unittest.TestCase):
         """Test the JSON serialization of Place."""
         place = Place()
         place_json = place.to_dict()
-        expected_keys = ['id', 'created_at', 'updated_at', 'city_id', 'user_id',
-                         'name', 'description', 'number_rooms', 'number_bathrooms',
-                         'max_guest', 'price_by_night', 'latitude', 'longitude',
+        expected_keys = ['id', 'created_at', 'updated_at',
+                         'city_id', 'user_id',
+                         'name', 'description', 'number_rooms',
+                         'number_bathrooms',
+                         'max_guest', 'price_by_night',
+                         'latitude', 'longitude',
                          'amenity_ids', '__class__']
         self.assertEqual(sorted(place_json.keys()), sorted(expected_keys))
         self.assertEqual(place_json['__class__'], 'Place')
@@ -108,6 +113,7 @@ class TestPlace(unittest.TestCase):
         result = pep8style.check_files(['models/city.py'])
         msg = "fix pep8: " + str(result.messages)
         self.assertEqual(result.total_errors, 0, msg)
+
 
 if __name__ == '__main__':
     unittest.main()
