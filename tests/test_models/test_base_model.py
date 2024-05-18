@@ -85,6 +85,24 @@ class TestBase(unittest.TestCase):
         time1 = str(model.updated_at)
         self.assertNotEqual(time0, time1)
 
+    def test_str_(self):
+        """Test the string represntation"""
+        date = datetime.datetime.today()
+        date_rep = repr(date)
+        my_model = BaseModel()
+        my_model.id = "sdfsdfsd34243"
+        my_model.created_at = my_model.updated_at = date
+        datestr = my_model.__str__()
+        self.assertIn("[BaseModel] (sdfsdfsd34243)", datestr)
+        self.assertIn("'id': 'sdfsdfsd34243'", datestr)
+        self.assertIn("'created_at': " + date_rep, datestr)
+        self.assertIn("'updated_at': " + date_rep, datestr)
+
+    def test_none_args(self):
+        """Test none model argmument"""
+        my_model = BaseModel(None)
+        self.assertNotIn(None, my_model.__dict__.values())
+
 
 if __name__ == '__main__':
     unittest.main()
