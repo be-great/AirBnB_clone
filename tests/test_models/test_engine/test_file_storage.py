@@ -17,7 +17,7 @@ class TestFileStorage(unittest.TestCase):
         """
         test an object of FileStorage is instance of FileStorage class
         """
-        self.assertEqual(type(FileStorage(), FileStorage))
+        self.assertEqual(type(FileStorage()), FileStorage)
 
     def testObjectOfFileStorageWithArg(self):
         """
