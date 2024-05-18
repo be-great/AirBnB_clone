@@ -10,7 +10,7 @@ from models.city import City
 from models.state import State
 from models.review import Review
 from models import storage
-
+import re
 
 def deleteObjectById(id):
     """
@@ -70,10 +70,12 @@ class HBNBCommand(cmd.Cmd):
         parts = arg.split(".")
         if len(parts) > 1:
             classname = parts[0]
-            methodname = parts[1][:-2]
-            if methodname in subcommands:
-                function = f'self.do_{methodname}("{classname}")'
+            methodname = (re.search(r'(\w+)\((.*?)\)', parts[1]))
+            if methodname.group(1) in subcommands:
+                function = f'self.do_{methodname.group(1)}("{classname}")'
                 eval(function)
+            else:
+                print("*** Unknown syntax: "+ arg)
 
 
 
