@@ -82,7 +82,9 @@ class HBNBCommand(cmd.Cmd):
         if len(parts) > 1:
             classname = parts[0]
             methodname = parts[1].split("(")[0]
-            idArg = parts[1].split("(")[1].split(")")[0]  # The problem is this method not work if id number inside "" and work without "" try it
+            # The problem is this method not work if id
+            # number inside "" and work without "" try it
+            idArg = parts[1].split("(")[1].split(")")[0]
             if methodname in subcommands.keys():
                 return subcommands[methodname](f"{classname} {idArg}")
         print("*** Unknown syntax: ()".format(parts))

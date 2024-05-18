@@ -53,5 +53,8 @@ AirBnB stand for <b style="color:red"> AirBedandBreakfast</b> a service lets pro
 
         
     
-## we going to read the file exist reload it and save them again with new data
+<h3>we going to read the file exist reload it and save them again with new data </h3>
 
+## Run Test
+
+    echo "python3.8 -m unittest discover tests" | bash

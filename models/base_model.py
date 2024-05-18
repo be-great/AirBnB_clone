@@ -16,6 +16,11 @@ class BaseModel:
         """
         *args, **kwargs arguments for the constructor of a BaseModel
         """
+        self.id = str(uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()  # I think this doesn't\
+        # need to exist in the requirement: otherwise:\
+        # create id and created_at as you did previously (new instance)
         if kwargs:
             # Iterate through kwargs
             for key, value in kwargs.items():
@@ -27,11 +32,6 @@ class BaseModel:
                 else:
                     setattr(self, key, value)
         else:
-            self.id = str(uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()  # I think this doesn't\
-            # need to exist in the requirement: otherwise:\
-            # create id and created_at as you did previously (new instance)
             models.storage.new(self)
 
     def __str__(self):

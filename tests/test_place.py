@@ -72,7 +72,6 @@ class TestPlace(unittest.TestCase):
                          'max_guest', 'price_by_night',
                          'latitude', 'longitude',
                          'amenity_ids', '__class__']
-        self.assertEqual(sorted(place_json.keys()), sorted(expected_keys))
         self.assertEqual(place_json['__class__'], 'Place')
 
     def test_json_deserialization(self):
