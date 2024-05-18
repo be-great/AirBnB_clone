@@ -65,8 +65,6 @@ class HBNBCommand(cmd.Cmd):
                     "Review"
                     ]
 
-<<<<<<< HEAD
-=======
     def default(self, arg):
         subcommands = {
             "all": self.do_all,
@@ -84,13 +82,12 @@ class HBNBCommand(cmd.Cmd):
         if len(parts) > 1:
             classname = parts[0]
             methodname = parts[1].split("(")[0]
-            idArg = parts[1].split("(")[1].split(")")[0] ## The problem is this method not work if id number inside "" and work without "" try it
+            idArg = parts[1].split("(")[1].split(")")[0]  # The problem is this method not work if id number inside "" and work without "" try it
             if methodname in subcommands.keys():
                 return subcommands[methodname](f"{classname} {idArg}")
         print("*** Unknown syntax: ()".format(parts))
         return False
 
->>>>>>> 4fe3d6421388159874e6ca4896fc705f7044321c
     def do_quit(self, arg):
         """Quit command to exit the program"""
         print()
