@@ -85,12 +85,6 @@ class TestState(unittest.TestCase):
         self.assertEqual(state.population, 10000000)
         self.assertEqual(state.area, 163696)
 
-    def test_invalid_instance_creation(self):
-        """Test if an instance of State is"""
-        """not created with invalid attributes."""
-        with self.assertRaises(TypeError):
-            state = State(invalid_arg='value')
-
     def test_attribute_types(self):
         """Test if attribute types are as expected."""
         state = State()

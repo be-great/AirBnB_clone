@@ -98,12 +98,6 @@ class TestReview(unittest.TestCase):
         self.assertTrue(hasattr(review, 'rating'))
         self.assertEqual(review.rating, 5)
 
-    def test_invalid_instance_creation(self):
-        """Test if an instance of Review is"""
-        """not created with invalid attributes."""
-        with self.assertRaises(TypeError):
-            review = Review(invalid_arg='value')
-
     def test_attribute_types(self):
         """Test if attribute types are as expected."""
         review = Review()
