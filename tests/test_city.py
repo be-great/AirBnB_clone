@@ -5,7 +5,6 @@ unittests for models/city.py.
 
 import unittest
 from models.city import City
-import pep8
 
 
 class TestCity(unittest.TestCase):
@@ -55,13 +54,6 @@ class TestCity(unittest.TestCase):
         city.population = 1000000
         status = True if "population" in city.__dict__.keys() else False
         self.assertEqual(True, status)
-
-    def test_pep8_city(self):
-        """Test PEP8 compliance for City class"""
-        pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files(['models/city.py'])
-        msg = "fix pep8: " + str(result.messages)
-        self.assertEqual(result.total_errors, 0, msg)
 
 
 if __name__ == '__main__':

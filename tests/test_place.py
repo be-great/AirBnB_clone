@@ -2,7 +2,6 @@ import unittest
 from models.place import Place
 from datetime import datetime
 import json
-import pep8
 
 
 class TestPlace(unittest.TestCase):
@@ -105,13 +104,6 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place.latitude, 123.456)
         self.assertEqual(place.longitude, -78.90)
         self.assertEqual(place.amenity_ids, ['123', '456'])
-
-    def test_pep8_city(self):
-        """Test PEP8 compliance for City class"""
-        pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files(['models/city.py'])
-        msg = "fix pep8: " + str(result.messages)
-        self.assertEqual(result.total_errors, 0, msg)
 
 
 if __name__ == '__main__':

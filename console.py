@@ -82,10 +82,6 @@ class HBNBCommand(cmd.Cmd):
         if len(parts) > 1:
             classname = parts[0]
             args = parts[1].split("(")
-<<<<<<< HEAD
-            # The problem is this method not work if id
-=======
->>>>>>> 179a1805796334b1052f140148681814e491534a
             methodname = args[0]
             # number inside "" and work without "" try it
             idArg = parts[1].split("(")[1].split(")")[0]

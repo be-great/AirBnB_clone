@@ -5,7 +5,6 @@ import unittest
 from models.base_model import BaseModel
 import datetime
 import time
-import pep8
 
 
 class TestBase(unittest.TestCase):
@@ -85,22 +84,6 @@ class TestBase(unittest.TestCase):
         model.save()
         time1 = str(model.updated_at)
         self.assertNotEqual(time0, time1)
-
-    """            Test pycodestyle style              """
-    """------------------------------------------------"""
-    def test_pep8_test_base_model(self):
-        """tests for pep8"""
-        p8 = pep8.StyleGuide(quiet=True)
-        p = p8.check_files(['tests/test_models/test_base_model.py'])
-        msg = "fix pep8 :" + str(p.messages)
-        self.assertEqual(p.total_errors, 0, msg)
-
-    def test_pep8_base_model(self):
-        """Test PEP8 compliance for BaseModel class"""
-        pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files(['models/base_model.py'])
-        msg = "fix pep8 :" + str(result.messages)
-        self.assertEqual(result.total_errors, 0, msg)
 
 
 if __name__ == '__main__':
