@@ -169,6 +169,12 @@ class HBNBCommand(cmd.Cmd):
         print("")  # Add a newline for better formatting
         return True
 
+    def emptyline(self):
+        """
+        Called when an empty line is entered.
+        """
+        pass
+
     def do_create(self, arg):
         """
         Create a new instance of a specified \
