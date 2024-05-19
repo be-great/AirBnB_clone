@@ -50,7 +50,7 @@ class FileStorage:
         Serializes __objects to JSON file.
         """
         serialized_objs = {key: value.to_dict() for key,
-                           value in FileStorage.__objects.items()}
+                           value in self.__objects.items()}
         with open(FileStorage.__file_path, "w") as file:
             json.dump(serialized_objs, file)
 
