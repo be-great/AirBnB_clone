@@ -349,8 +349,8 @@ class TestHBNBCommandUpdate(unittest.TestCase):
         obj = BaseModel()
         obj.save()
         self.console.onecmd(f"update BaseModel {obj.id} name \"TestName\"")
-        self.assertEqual(getattr(storage.all()
-                                 [f"BaseModel.{obj.id}"], "name"), "TestName")
+        self.assertEqual(getattr(
+            storage.all()[f"BaseModel.{obj.id}"], "name"), 'TestName')
 
 
 class TestHBNBCommandCount(unittest.TestCase):
