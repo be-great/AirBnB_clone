@@ -172,24 +172,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """
-    Create a new instance of a specified class and save it to the storage.
-
-    Args:
-        arg (str): The argument passed to the command, which should contain \
-        the name of the class.
-
-    Prints:
-        - If the class name is missing:
-            Prints an error message indicating that the class name is missing.
-        - If the specified class doesn't exist:
-            Prints an error message indicating that the class doesn't exist.
-        - If the instance is created successfully:
-            Prints the ID of the created instance.
-
-    Example Usage:
-        (hbnb) create BaseModel
-            [ID of the newly created BaseModel instance]
-    """
+        Create a new instance of a specified \
+        class and save it to the storage.
+        """
         arguments = arg.split()
         if len(arguments) < 1:
             print("** class name missing **")
@@ -201,41 +186,8 @@ class HBNBCommand(cmd.Cmd):
             print(obj.id)
 
     def do_show(self, arg):
-        """
-    Display the string representation of an instance based on the class name \
-    and ID.
-
-    Args:
-        arg (str): The argument passed to the command, which should contain \
-        the class name
-                   and the ID of the instance separated by a space.
-
-    Returns:
-        None
-
-    Prints:
-        - If the class name is missing:
-            Prints an error message indicating that the class name is missing.
-        - If the specified class does not exist:
-            Prints an error message indicating that the class does not exist.
-        - If the instance ID is missing:
-            Prints an error message indicating that the instance ID is missing.
-        - If the instance with the specified ID does not exist:
-            Prints an error message indicating that no instance \
-            was found with that ID.
-        - If the instance with the specified ID exists:
-            Prints the string representation of the instance.
-
-    Example Usage:
-        (hbnb) show
-            ** class name missing **
-        (hbnb) show BaseModel
-            ** instance id missing **
-        (hbnb) show BaseModel 123
-            ** no instance found **
-        (hbnb) show BaseModel 12345-6789-1011
-            [String representation of the instance with ID 12345-6789-1011]
-    """
+        """Display the string representation of an instance \
+        based on the class name"""
         arguments = arg.split()
         # search the id
         if len(arguments) < 1:
@@ -254,25 +206,6 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, arg):
         """
     Delete an instance of a specified class based on its ID.
-
-    Args:
-        arg (str): The argument passed to the command, which should contain\
-        the class name and instance ID.
-
-    Prints:
-        - If the class name is missing:
-            Prints an error message indicating that the class name is missing.
-        - If the specified class doesn't exist:
-            Prints an error message indicating that the class doesn't exist.
-        - If the instance ID is missing:
-            Prints an error message indicating that the instance ID is missing.
-        - If the instance is not found:
-            Prints an error message indicating that no instance was found with\
-            the provided ID.
-
-    Example Usage:
-        (hbnb) destroy BaseModel 1234-5678-9012
-            [Deleted the instance with ID '1234-5678-9012']
     """
         arguments = arg.split()
         # search the id
@@ -290,34 +223,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """
-    Print all string representations of objects or all objects of a specified \
-    class.
-
-    Args:
-        arg (str): The argument passed to the command. If provided, it should \
-        contain the class name
-                   for which objects need to be printed.
-
-    Returns:
-        None
-
-    Prints:
-        If the argument is provided and valid (i.e., class name exists):
-            - Prints a list of string representations of all objects of the \
-            specified class.
-        If the argument is not provided or invalid:
-            - Prints a list of string representations of all objects across \
-            all classes.
-            - If the specified class does not exist, prints an error message.
-
-    Example Usage:
-        (hbnb) all
-            [String representation of all objects across all classes]
-        (hbnb) all BaseModel
-            [String representation of all objects of class BaseModel]
-        (hbnb) all NonExistentClass
-            ** class doesn't exist **
-    """
+        Print all string representations of objects or \
+        all objects of a specified class.
+        """
 
         arguments = arg.split()
         list = []
@@ -340,33 +248,6 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """
     Retrieve all instances or instances of a specific class.
-
-    Args:
-        arg (str): The argument passed to the command. If provided, it should \
-        contain
-                   the name of the class for which instances need to be \
-                   retrieved.
-
-    Returns:
-        None
-
-    Prints:
-        - If the argument is provided and valid (i.e., class name exists):
-            Prints a list of string representations of instances of the \
-            specified class.
-        - If no argument is provided:
-            Prints a list of string representations of all instances across \
-            all classes.
-        - If the specified class does not exist:
-            Prints an error message indicating that the class does not exist.
-
-    Example Usage:
-        (hbnb) all
-            [List of string representations of all instances]
-        (hbnb) all BaseModel
-            [List of string representations of instances of BaseModel]
-        (hbnb) all NonExistentClass
-            ** class doesn't exist **
     """
         arguments = arg.split()
         if len(arguments) < 1:
@@ -394,31 +275,6 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, arg):
         """
     Count the number of instances of a specified class.
-
-    Args:
-        arg (str): The argument passed to the command. Should contain the name\
-                                                         of the class
-                   for which instances need to be counted.
-
-    Returns:
-        None
-
-    Prints:
-        If the argument is provided and valid (i.e., class name exists):
-            - Prints the number of instances of the specified class.
-        If the argument is not provided:
-            - Prints an error message indicating that the class name is\
-            missing.
-        If the specified class does not exist:
-            - Prints an error message indicating that the class does not exist.
-
-    Example Usage:
-        (hbnb) count
-            ** class name missing **
-        (hbnb) count BaseModel
-            [Number of instances of BaseModel]
-        (hbnb) count NonExistentClass
-            ** class doesn't exist **
     """
         countOfInstances = 0
         arguments = arg.split()
