@@ -14,24 +14,24 @@ from shlex import split
 from models import storage
 
 
-def parse(arg):
-    curly_braces = re.search(r"\{(.*?)\}", arg)
+def parsing(arg):
+    # handle the arguments
+    braces = re.search(r"\{(.*?)\}", arg)
     brackets = re.search(r"\[(.*?)\]", arg)
-    if curly_braces is None:
+    if braces is None:
         if brackets is None:
-            retl = [i.strip(",") for i in split(arg)]
-            return retl
+            arr = [i.strip(",") for i in split(arg)]
+            return arr
         else:
-            lexer = split(arg[:brackets.span()[0]])
-            retl = [i.strip(",") for i in lexer]
-            retl.append(brackets.group())
-            return retl
+            tmp = split(arg[:brackets.span()[0]])
+            arr = [i.strip(",") for i in tmp]
+            arr.append(brackets.group())
+            return arr
     else:
-        lexer = split(arg[:curly_braces.span()[0]])
-        retl = [i.strip(",") for i in lexer]
-        retl.append(curly_braces.group())
-        return retl
-    print(retl)
+        tmp = split(arg[:braces.span()[0]])
+        arr = [i.strip(",") for i in tmp]
+        arr.append(braces.group())
+        return arr
 
 
 def deleteObjectById(id):
@@ -263,7 +263,7 @@ class HBNBCommand(cmd.Cmd):
         """ Retrieve all instances or instances of a specific class."""
         """by adding or updating attribute (save"""
         """the change into the JSON file)"""
-        arguments = arg.split()
+        arguments = parsing(arg)
         objs = storage.all()
 
         if len(arguments) < 1:
