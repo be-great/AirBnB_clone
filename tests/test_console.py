@@ -50,3 +50,19 @@ class test_HBNBCommand_doc(unittest.TestCase):
         """Test doc"""
         self.assertIsNotNone(HBNBCommand.do_all.__doc__)
 
+    def test_do_update_doc(self):
+        """Test doc"""
+        self.assertIsNotNone(HBNBCommand.do_update.__doc__)
+
+    def test_do_count_doc(self):
+        """Test doc"""
+        self.assertIsNotNone(HBNBCommand.do_count.__doc__)
+
+    def test_do_show_doc(self):
+        """Test doc"""
+        self.assertIsNotNone(HBNBCommand.do_show.__doc__)
+
+    def test_default_doc(self):
+        """Test doc"""
+        self.assertIsNotNone(HBNBCommand.default.__doc__)
+
