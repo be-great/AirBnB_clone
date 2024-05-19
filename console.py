@@ -14,24 +14,24 @@ from shlex import split
 from models import storage
 
 
-def parse(arg):
-    curly_braces = re.search(r"\{(.*?)\}", arg)
+def parsing(arg):
+    # handle the argument filtering
+    braces = re.search(r"\{(.*?)\}", arg)
     brackets = re.search(r"\[(.*?)\]", arg)
-    if curly_braces is None:
+    if braces is None:
         if brackets is None:
-            retl = [i.strip(",") for i in split(arg)]
-            return retl
+            arr = [i.strip(",") for i in split(arg)]
+            return arr
         else:
-            lexer = split(arg[:brackets.span()[0]])
-            retl = [i.strip(",") for i in lexer]
-            retl.append(brackets.group())
-            return retl
+            tmp = split(arg[:brackets.span()[0]])
+            arr = [i.strip(",") for i in tmp]
+            arr.append(brackets.group())
+            return arr
     else:
-        lexer = split(arg[:curly_braces.span()[0]])
-        retl = [i.strip(",") for i in lexer]
-        retl.append(curly_braces.group())
-        return retl
-    print(retl)
+        tmp = split(arg[:braces.span()[0]])
+        arr = [i.strip(",") for i in tmp]
+        arr.append(braces.group())
+        return arr
 
 
 def deleteObjectById(id):
@@ -260,46 +260,42 @@ class HBNBCommand(cmd.Cmd):
             print(list)
 
     def do_update(self, arg):
-        """Usage: update <class> <id> <attribute_name> <attribute_value> or
-       <class>.update(<id>, <attribute_name>, <attribute_value>) or
-       <class>.update(<id>, <dictionary>)
-        Update a class instance of a given id by adding or updating
-        a given attribute key/value pair or dictionary."""
-        argl = parse(arg)
-        objdict = storage.all()
+        """Retrieve all instances or instances of a specific class."""
+        arguments = parsing(arg)
+        objs = storage.all()
 
-        if len(argl) == 0:
+        if len(arguments) < 1:
             print("** class name missing **")
             return False
-        if argl[0] not in HBNBCommand.__classes:
+        if arguments[0] not in self.__classnames:
             print("** class doesn't exist **")
             return False
-        if len(argl) == 1:
+        if len(arguments) < 2:
             print("** instance id missing **")
             return False
-        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+        if "{}.{}".format(arguments[0], arguments[1]) not in objs.keys():
             print("** no instance found **")
             return False
-        if len(argl) == 2:
+        if len(arguments) < 3:
             print("** attribute name missing **")
             return False
-        if len(argl) == 3:
+        if len(arguments) < 4:
             try:
-                type(eval(argl[2])) != dict
+                type(eval(arguments[2])) != dict
             except NameError:
                 print("** value missing **")
                 return False
 
-        if len(argl) == 4:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            if argl[2] in obj.__class__.__dict__.keys():
-                valtype = type(obj.__class__.__dict__[argl[2]])
-                obj.__dict__[argl[2]] = valtype(argl[3])
+        if len(arguments) < 5:
+            obj = objs["{}.{}".format(arguments[0], arguments[1])]
+            if arguments[2] in obj.__class__.__dict__.keys():
+                valtype = type(obj.__class__.__dict__[arguments[2]])
+                obj.__dict__[arguments[2]] = valtype(arguments[3])
             else:
-                obj.__dict__[argl[2]] = argl[3]
-        elif type(eval(argl[2])) == dict:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            for k, v in eval(argl[2]).items():
+                obj.__dict__[arguments[2]] = arguments[3]
+        elif type(eval(arguments[2])) == dict:
+            obj = objs["{}.{}".format(arguments[0], arguments[1])]
+            for k, v in eval(arguments[2]).items():
                 if (k in obj.__class__.__dict__.keys() and
                         type(obj.__class__.__dict__[k]) in {str, int, float}):
                     valtype = type(obj.__class__.__dict__[k])
