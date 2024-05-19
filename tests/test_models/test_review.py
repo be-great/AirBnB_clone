@@ -1,6 +1,8 @@
 import unittest
 from models.review import Review
 from datetime import datetime
+import models
+import time
 
 
 class TestReview(unittest.TestCase):
@@ -144,6 +146,35 @@ class TestReview(unittest.TestCase):
         self.assertEqual(review.place_id, "123")
         self.assertEqual(review.user_id, "456")
         self.assertEqual(review.text, "Test text")
+
+    def test_to_dicttype(self):
+        self.assertTrue(dict, type(Review().to_dict()))
+
+    def test_new_instance_stored_in_objects(self):
+        self.assertIn(Review(), models.storage.all().values())
+
+    def test_idtype(self):
+        self.assertEqual(str, type(Review().id))
+
+    def test_place_idtype(self):
+        self.assertEqual(str, type(Review.place_id))
+
+    def test_user_idtype(self):
+        self.assertEqual(str, type(Review.user_id))
+
+    def test_texttype(self):
+        self.assertEqual(str, type(Review.text))
+
+    def test_two_model_id(self):
+        my_model0 = Review()
+        my_model1 = Review()
+        self.assertNotEqual(my_model0.id, my_model1.id)
+
+    def test_created_at(self):
+        my_model0 = Review()
+        time.sleep(1)
+        my_model1 = Review()
+        self.assertLess(my_model0.created_at, my_model1.created_at)
 
 
 if __name__ == '__main__':

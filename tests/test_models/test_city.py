@@ -5,6 +5,8 @@ unittests for models/city.py.
 
 import unittest
 from models.city import City
+import models
+import time
 
 
 class TestCity(unittest.TestCase):
@@ -54,6 +56,32 @@ class TestCity(unittest.TestCase):
         city.population = 1000000
         status = True if "population" in city.__dict__.keys() else False
         self.assertEqual(True, status)
+
+    def test_to_dicttype(self):
+        self.assertTrue(dict, type(City().to_dict()))
+
+    def test_new_instance_stored_in_objects(self):
+        self.assertIn(City(), models.storage.all().values())
+
+    def test_idtype(self):
+        self.assertEqual(str, type(City().id))
+
+    def test_state_idtype(self):
+        self.assertEqual(str, type(City.state_id))
+
+    def test_nametype(self):
+        self.assertEqual(str, type(City.name))
+
+    def test_two_model_id(self):
+        my_model0 = City()
+        my_model1 = City()
+        self.assertNotEqual(my_model0.id, my_model1.id)
+
+    def test_created_at(self):
+        my_model0 = City()
+        time.sleep(1)
+        my_model1 = City()
+        self.assertLess(my_model0.created_at, my_model1.created_at)
 
 
 if __name__ == '__main__':
