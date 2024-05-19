@@ -136,26 +136,19 @@ class HBNBCommand(cmd.Cmd):
         # Call the corresponding method from the subcommands dictionary,
         # passing the classname as an argument
 
-        parts = arg.split(".")
-        if len(parts) > 1:
-            classname = parts[0]
-            args = parts[1].split("(")
-            methodname = args[0]
-            extraArg = args[1].split(")")[0]
-            allArgs = args[1].split(")")[0].split(",")
-            if methodname in subcommands.keys():
-                if methodname != "update":
-                    return subcommands[methodname]("{} {}".format(classname,
-                                                                  extraArg))
-                else:
-                    idArg = allArgs[0]
-                    attrName = allArgs[1]
-                    attrValue = allArgs[2]
-                    return subcommands[methodname]("{} {} {} {}".format(
-                                                                classname,
-                                                                idArg,
-                                                                attrName,
-                                                                attrValue))
+        try:
+            classname, classarg = arg.split(".", 1)
+        except ValueError:
+            print("*** Unknown syntax: {}".format(arg))
+            return False
+        filter = re.search(r"\((.*?)\)", classarg)
+        if filter:
+            subarg0 = classarg[: filter.start()]
+            subarg1 = filter.group(1)
+            if subarg0 in subcommands:
+                call = "{} {}".format(classname, subarg1)
+                subcommands[subarg0](call)
+                return
         print("*** Unknown syntax: {}".format(arg))
         return False
 

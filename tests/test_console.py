@@ -158,13 +158,15 @@ class TestHBNBCommandCreate(unittest.TestCase):
     def test_create_no_class_name(self, mock_stdout):
         """Test create command with no class name."""
         self.console.onecmd("create")
-        self.assertIn("** class name missing **", mock_stdout.getvalue().strip())
+        self.assertIn("** class name missing **",
+                      mock_stdout.getvalue().strip())
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_create_invalid_class_name(self, mock_stdout):
         """Test create command with an invalid class name."""
         self.console.onecmd("create NonExistentClass")
-        self.assertIn("** class doesn't exist **", mock_stdout.getvalue().strip())
+        self.assertIn("** class doesn't exist **",
+                      mock_stdout.getvalue().strip())
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_create_valid_class_name(self, mock_stdout):
