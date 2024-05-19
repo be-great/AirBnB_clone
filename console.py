@@ -68,6 +68,31 @@ class HBNBCommand(cmd.Cmd):
                     ]
 
     def default(self, arg):
+        """
+    Execute the appropriate method based on the subcommand specified in the \
+    argument.
+
+    Args:
+        arg (str): The argument passed to the command, which may \
+        contain a subcommand
+                   and additional parameters separated by dots and parentheses.
+
+    Returns:
+        bool: True if the method corresponding to the subcommand \
+        is executed successfully,
+              False otherwise.
+
+    Prints:
+        - If the subcommand is not recognized:
+            Prints an error message indicating unknown syntax.
+
+    Example Usage:
+        (hbnb) User.show("38f22813-2753-4d42-b37c-57a17f1e4f88")
+            [Output of the show method for the specified User instance]
+        (hbnb) User.update("38f22813-2753-4d42-b37c-57a17f1e4f88", \
+        {'first_name': "John", "age": 89})
+            [Output of the update method for the specified User instance]
+    """
         subcommands = {
             "all": self.do_all,
             "show": self.do_show,
