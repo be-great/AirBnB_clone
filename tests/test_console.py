@@ -5,7 +5,7 @@ Defines unittests for console.py.
 import unittest
 from models import storage
 from models.engine.file_storage import FileStorage
-from console import HBNBCommand
+from console import HBNBCommand, deleteObjectById, findObjectById
 from io import StringIO
 from unittest.mock import patch
 
@@ -34,7 +34,15 @@ class test_HBNBCommand_doc(unittest.TestCase):
 
     """   Test documents for the base_model.py file    """
     """------------------------------------------------"""
-    def test_file_doc(self):
+    def test_deleteObjById_doc(self):
+        """Test doc"""
+        self.assertIsNotNone(deleteObjectById.__doc__)
+
+    def test_findObjById_doc(self):
+        """Test doc"""
+        self.assertIsNotNone(findObjectById.__doc__)
+
+    def test_class_doc(self):
         """Test doc"""
         self.assertIsNotNone(HBNBCommand.__doc__)
 
@@ -66,3 +74,10 @@ class test_HBNBCommand_doc(unittest.TestCase):
         """Test doc"""
         self.assertIsNotNone(HBNBCommand.default.__doc__)
 
+    def test_do_create_doc(self):
+        """Test doc"""
+        self.assertIsNotNone(HBNBCommand.do_create.__doc__)
+
+    def test_do_destroy_doc(self):
+        """Test doc"""
+        self.assertIsNotNone(HBNBCommand.do_destroy.__doc__)

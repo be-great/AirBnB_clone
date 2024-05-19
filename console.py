@@ -15,7 +15,21 @@ from models import storage
 
 def deleteObjectById(id):
     """
-    delete from file.json
+    Delete an object from storage by its ID.
+
+    Args:
+        id (str): The ID of the object to delete.
+
+    Returns:
+        bool or None: True if the object was successfully deleted,\
+        None if no object with the specified ID was found.
+
+    Example Usage:
+        result = deleteObjectById("1234-5678-9012")
+        if result:
+            print("Object deleted successfully.")
+        elif result is None:
+            print("No object found with the specified ID.")
     """
     all_objs = storage.all()
     for obj_id in all_objs.keys():
@@ -28,6 +42,23 @@ def deleteObjectById(id):
 
 
 def findObjectById(id):
+    """
+    Find an object by its ID.
+
+    Args:
+        id (str): The ID of the object to search for.
+
+    Returns:
+        obj: The object found with the specified ID, or None\
+        if no such object exists.
+
+    Example Usage:
+        obj = findObjectById("1234-5678-9012")
+        if obj:
+            print("Object found:", obj)
+        else:
+            print("Object not found.")
+    """
     id = id.strip('\"\'')
 
     all_objs = storage.all()
@@ -140,6 +171,25 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, arg):
+        """
+    Create a new instance of a specified class and save it to the storage.
+
+    Args:
+        arg (str): The argument passed to the command, which should contain \
+        the name of the class.
+
+    Prints:
+        - If the class name is missing:
+            Prints an error message indicating that the class name is missing.
+        - If the specified class doesn't exist:
+            Prints an error message indicating that the class doesn't exist.
+        - If the instance is created successfully:
+            Prints the ID of the created instance.
+
+    Example Usage:
+        (hbnb) create BaseModel
+            [ID of the newly created BaseModel instance]
+    """
         arguments = arg.split()
         if len(arguments) < 1:
             print("** class name missing **")
@@ -171,8 +221,8 @@ class HBNBCommand(cmd.Cmd):
         - If the instance ID is missing:
             Prints an error message indicating that the instance ID is missing.
         - If the instance with the specified ID does not exist:
-            Prints an error message indicating that no instance was found with \
-            that ID.
+            Prints an error message indicating that no instance \
+            was found with that ID.
         - If the instance with the specified ID exists:
             Prints the string representation of the instance.
 
@@ -202,6 +252,28 @@ class HBNBCommand(cmd.Cmd):
                 print(my_model)
 
     def do_destroy(self, arg):
+        """
+    Delete an instance of a specified class based on its ID.
+
+    Args:
+        arg (str): The argument passed to the command, which should contain\
+        the class name and instance ID.
+
+    Prints:
+        - If the class name is missing:
+            Prints an error message indicating that the class name is missing.
+        - If the specified class doesn't exist:
+            Prints an error message indicating that the class doesn't exist.
+        - If the instance ID is missing:
+            Prints an error message indicating that the instance ID is missing.
+        - If the instance is not found:
+            Prints an error message indicating that no instance was found with\
+            the provided ID.
+
+    Example Usage:
+        (hbnb) destroy BaseModel 1234-5678-9012
+            [Deleted the instance with ID '1234-5678-9012']
+    """
         arguments = arg.split()
         # search the id
         if len(arguments) < 1:
