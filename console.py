@@ -137,8 +137,7 @@ class HBNBCommand(cmd.Cmd):
         # passing the classname as an argument
 
         parts = arg.split(".")
-        print(parts)
-        if len(parts) > 1 or parts[1] not in subcommands:
+        if len(parts) > 1:
             classname = parts[0]
             args = parts[1].split("(")
             methodname = args[0]
@@ -157,7 +156,7 @@ class HBNBCommand(cmd.Cmd):
                                                                 idArg,
                                                                 attrName,
                                                                 attrValue))
-        print("*** Unknown syntax: ()".format(parts))
+        print("*** Unknown syntax: {}".format(parts))
         return False
 
     def do_quit(self, arg):
