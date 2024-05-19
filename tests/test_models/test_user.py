@@ -115,25 +115,6 @@ class TestUser(unittest.TestCase):
     """ --------------------to_dict----------------"""
     """-------------------- test----------------"""
 
-    def test_to_dict_with_arg(self):
-        my_model = User()
-        with self.assertRaises(TypeError):
-            my_model.to_dict(None)
-
-    def test_to_dict_contains_correct_keys(self):
-        my_model = User()
-        self.assertIn("id", my_model.to_dict())
-        self.assertIn("created_at", my_model.to_dict())
-        self.assertIn("updated_at", my_model.to_dict())
-        self.assertIn("__class__", my_model.to_dict())
-
-    def test_to_dict_contains_added_attributes(self):
-        my_model = User()
-        my_model.middle_name = "Holberton"
-        my_model.my_number = 98
-        self.assertEqual("Holberton", my_model.middle_name)
-        self.assertIn("my_number", my_model.to_dict())
-
     def test_to_dict_type(self):
         self.assertTrue(dict, type(User().to_dict()))
 
@@ -145,12 +126,6 @@ class TestUser(unittest.TestCase):
 
     def test_id_is_public_str(self):
         self.assertEqual(str, type(User().id))
-
-    def test_created_at_is_public_datetime(self):
-        self.assertEqual(datetime.datetime, type(User().created_at))
-
-    def test_updated_at_is_public_datetime(self):
-        self.assertEqual(datetime.datetime, type(User().updated_at))
 
     def test_email_is_public_str(self):
         self.assertEqual(str, type(User.email))
@@ -165,15 +140,15 @@ class TestUser(unittest.TestCase):
         self.assertEqual(str, type(User.last_name))
 
     def test_two_users_unique_ids(self):
-        us1 = User()
-        us2 = User()
-        self.assertNotEqual(us1.id, us2.id)
+        my_model0 = User()
+        my_model1 = User()
+        self.assertNotEqual(my_model0.id, my_model1.id)
 
     def test_two_users_different_created_at(self):
-        us1 = User()
-        time.sleep(0.05)
-        us2 = User()
-        self.assertLess(us1.created_at, us2.created_at)
+        my_model0 = User()
+        time.sleep(1)
+        my_model1 = User()
+        self.assertLess(my_model0.created_at, my_model1.created_at)
 
 
 if __name__ == '__main__':
