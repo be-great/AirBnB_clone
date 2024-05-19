@@ -158,13 +158,15 @@ class TestHBNBCommandCreate(unittest.TestCase):
     def test_create_no_class_name(self, mock_stdout):
         """Test create command with no class name."""
         self.console.onecmd("create")
-        self.assertIn("** class name missing **", mock_stdout.getvalue().strip())
+        self.assertIn("** class name missing **",
+                      mock_stdout.getvalue().strip())
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_create_invalid_class_name(self, mock_stdout):
         """Test create command with an invalid class name."""
         self.console.onecmd("create NonExistentClass")
-        self.assertIn("** class doesn't exist **", mock_stdout.getvalue().strip())
+        self.assertIn("** class doesn't exist **",
+                      mock_stdout.getvalue().strip())
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_create_valid_class_name(self, mock_stdout):
@@ -175,6 +177,53 @@ class TestHBNBCommandCreate(unittest.TestCase):
         self.assertNotIn("** class doesn't exist **", output)
         self.assertNotIn("** class name missing **", output)
 
+
+class TestHBNBCommandShow(unittest.TestCase):
+    """Tests the show command of HBNBCommand."""
+
+    def setUp(self):
+        """Set up test environment."""
+        self.console = HBNBCommand()
+
+        # Create a sample object for testing
+        self.model = BaseModel()
+        self.model.save()
+
+    def tearDown(self):
+        """Clean up test environment."""
+        storage.all().clear()
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_show_no_class_name(self, mock_stdout):
+        """Test show command with no class name."""
+        self.console.onecmd("show")
+        self.assertIn("** class name missing **", mock_stdout.getvalue().strip())
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_show_invalid_class_name(self, mock_stdout):
+        """Test show command with an invalid class name."""
+        self.console.onecmd("show NonExistentClass")
+        self.assertIn("** class doesn't exist **", mock_stdout.getvalue().strip())
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_show_no_instance_id(self, mock_stdout):
+        """Test show command with no instance ID."""
+        self.console.onecmd("show BaseModel")
+        self.assertIn("** instance id missing **", mock_stdout.getvalue().strip())
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_show_instance_id_not_found(self, mock_stdout):
+        """Test show command with an instance ID that does not exist."""
+        self.console.onecmd("show BaseModel 12345678-1234-1234-1234-123456789012")
+        self.assertIn("** no instance found **", mock_stdout.getvalue().strip())
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_show_valid_class_name_and_instance_id(self, mock_stdout):
+        """Test show command with a valid class name and instance ID."""
+        self.console.onecmd(f"show BaseModel {self.model.id}")
+        output = mock_stdout.getvalue().strip()
+        self.assertIn(f"[BaseModel] ({self.model.id})", output)
+        self.assertIn(f"'id': '{self.model.id}'", output)
 
 if __name__ == '__main__':
     unittest.main()
