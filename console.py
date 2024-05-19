@@ -130,11 +130,6 @@ class HBNBCommand(cmd.Cmd):
             "destroy": self.do_destroy,
             "update": self.do_update,
             "count": self.do_count}
-        # This way is easer than old way
-        # How it's work:
-        # A dictionary mapping subcommand names to their corresponding methods
-        # Call the corresponding method from the subcommands dictionary,
-        # passing the classname as an argument
 
         try:
             classname, classarg = arg.split(".", 1)
