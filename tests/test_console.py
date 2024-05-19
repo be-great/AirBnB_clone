@@ -352,5 +352,36 @@ class TestHBNBCommandUpdate(unittest.TestCase):
                                  [f"BaseModel.{obj.id}"], "name"), "TestName")
 
 
+class TestHBNBCommandCount(unittest.TestCase):
+    """Tests the count command of HBNBCommand."""
+
+    def setUp(self):
+        """Set up test environment"""
+        self.console = HBNBCommand()
+
+    def tearDown(self):
+        """Tear down test environment"""
+        storage._FileStorage__objects.clear()
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_count_no_class_name(self, mock_stdout):
+        self.console.onecmd("count")
+        self.assertEqual(mock_stdout.getvalue(), "** class name missing **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_count_invalid_class_name(self, mock_stdout):
+        self.console.onecmd("count InvalidClass")
+        self.assertEqual(mock_stdout.getvalue(), "** class doesn't exist **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_count_valid_class_name(self, mock_stdout):
+        obj1 = BaseModel()
+        obj2 = BaseModel()
+        obj1.save()
+        obj2.save()
+        self.console.onecmd("count BaseModel")
+        self.assertEqual(mock_stdout.getvalue().strip(), "2")
+
+
 if __name__ == '__main__':
     unittest.main()
