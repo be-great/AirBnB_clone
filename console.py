@@ -82,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
 
         parts = arg.split(".")
         print(parts)
-        if len(parts) > 1 and parts[1] != "":
+        if len(parts) > 1 or parts[1] not in subcommands:
             classname = parts[0]
             args = parts[1].split("(")
             methodname = args[0]
@@ -100,9 +100,8 @@ class HBNBCommand(cmd.Cmd):
                                                                 idArg,
                                                                 attrName,
                                                                 attrValue))
-        else:
-            print("*** Unknown syntax: ()".format(parts))
-            return False
+        print("*** Unknown syntax: ()".format(parts))
+        return False
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
