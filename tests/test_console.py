@@ -232,7 +232,7 @@ class TestHBNBCommandShow(unittest.TestCase):
 
 
 class TestHBNBCommandDestroy(unittest.TestCase):
-    """Tests the show command of HBNBCommand."""
+    """Tests the destroy command of HBNBCommand."""
 
     def setUp(self):
         """Set up test environment"""
@@ -275,6 +275,40 @@ class TestHBNBCommandDestroy(unittest.TestCase):
 
         # Check if the instance is removed
         self.assertNotIn(f"BaseModel.{instance_id}", storage.all())
+
+
+class TestHBNBCommandAll(unittest.TestCase):
+    """Tests the all command of HBNBCommand."""
+
+    def setUp(self):
+        """Set up test environment"""
+        self.console = HBNBCommand()
+
+    def tearDown(self):
+        """Tear down test environment"""
+        storage.__objects.clear()
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_all_no_class_name(self, mock_stdout):
+        self.console.onecmd("all")
+        self.assertEqual(mock_stdout.getvalue(), "[]\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_all_invalid_class_name(self, mock_stdout):
+        self.console.onecmd("all InvalidClass")
+        self.assertEqual(mock_stdout.getvalue(), "** class doesn't exist **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_all_valid_class_name(self, mock_stdout):
+        # Create a new instance
+        instance1 = BaseModel()
+        instance1.save()
+        instance2 = BaseModel()
+        instance2.save()
+
+        self.console.onecmd("all BaseModel")
+        expected_output = f'["{str(instance1)}", "{str(instance2)}"]\n'
+        self.assertEqual(mock_stdout.getvalue(), expected_output)
 
 
 if __name__ == '__main__':
