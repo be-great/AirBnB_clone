@@ -8,6 +8,7 @@ from models.engine.file_storage import FileStorage
 from console import HBNBCommand, deleteObjectById, findObjectById
 from io import StringIO
 from unittest.mock import patch
+from models.base_model import BaseModel
 
 
 class test_HBNBCommand_Prompting(unittest.TestCase):
