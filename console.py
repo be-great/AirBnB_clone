@@ -230,12 +230,13 @@ class HBNBCommand(cmd.Cmd):
                     obj = all_objs[obj_id]
                     if (obj.to_dict())["__class__"] == arguments[0]:
                         list.append(str(obj))
+                print(list)
         else:
             all_objs = storage.all()
             for obj_id in all_objs.keys():
                 obj = all_objs[obj_id]
                 list.append(str(obj))
-        print(list)
+            print(list)
 
     def do_update(self, arg):
         """

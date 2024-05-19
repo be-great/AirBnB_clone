@@ -197,25 +197,30 @@ class TestHBNBCommandShow(unittest.TestCase):
     def test_show_no_class_name(self, mock_stdout):
         """Test show command with no class name."""
         self.console.onecmd("show")
-        self.assertIn("** class name missing **", mock_stdout.getvalue().strip())
+        self.assertIn("** class name missing **",
+                      mock_stdout.getvalue().strip())
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_show_invalid_class_name(self, mock_stdout):
         """Test show command with an invalid class name."""
         self.console.onecmd("show NonExistentClass")
-        self.assertIn("** class doesn't exist **", mock_stdout.getvalue().strip())
+        self.assertIn("** class doesn't exist **",
+                      mock_stdout.getvalue().strip())
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_show_no_instance_id(self, mock_stdout):
         """Test show command with no instance ID."""
         self.console.onecmd("show BaseModel")
-        self.assertIn("** instance id missing **", mock_stdout.getvalue().strip())
+        self.assertIn("** instance id missing **",
+                      mock_stdout.getvalue().strip())
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_show_instance_id_not_found(self, mock_stdout):
         """Test show command with an instance ID that does not exist."""
-        self.console.onecmd("show BaseModel 12345678-1234-1234-1234-123456789012")
-        self.assertIn("** no instance found **", mock_stdout.getvalue().strip())
+        string = "show BaseModel 12345678-1234-1234-1234-123456789012"
+        self.console.onecmd(string)
+        self.assertIn("** no instance found **",
+                      mock_stdout.getvalue().strip())
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_show_valid_class_name_and_instance_id(self, mock_stdout):
@@ -224,6 +229,7 @@ class TestHBNBCommandShow(unittest.TestCase):
         output = mock_stdout.getvalue().strip()
         self.assertIn(f"[BaseModel] ({self.model.id})", output)
         self.assertIn(f"'id': '{self.model.id}'", output)
+
 
 if __name__ == '__main__':
     unittest.main()

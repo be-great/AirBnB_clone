@@ -7,11 +7,31 @@ import models
 import unittest
 import datetime
 from models.user import User
+import os
+import time
 
 
 class TestUser(unittest.TestCase):
-    """Test cases for the User class."""
 
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "tmpfile")
+        except IOError:
+            pass
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("tmpfile", "file.json")
+        except IOError:
+            pass
+
+    """Test cases for the User class."""
     def testClassDoc(self):
         """Test doc of class"""
         self.assertIsNotNone(User.__doc__)
@@ -77,6 +97,55 @@ class TestUser(unittest.TestCase):
         created_at = User().created_at
         updated_at = User().updated_at
         self.assertNotEqual(created_at, updated_at)
+
+    """ --------------------save----------------"""
+    """-------------------- test----------------"""
+    def test_one_save(self):
+        my_model = User()
+        time.sleep(1)
+        update_ = my_model.updated_at
+        my_model.save()
+        self.assertLess(update_, my_model.updated_at)
+
+    def test_save_instance_witharg(self):
+        my_model = User()
+        with self.assertRaises(TypeError):
+            my_model.save(None)
+
+    """ --------------------to_dict----------------"""
+    """-------------------- test----------------"""
+
+    def test_to_dicttype(self):
+        self.assertTrue(dict, type(User().to_dict()))
+
+    def test_new_instance_stored_in_objects(self):
+        self.assertIn(User(), models.storage.all().values())
+
+    def test_idtype(self):
+        self.assertEqual(str, type(User().id))
+
+    def test_emailtype(self):
+        self.assertEqual(str, type(User.email))
+
+    def test_passwordtype(self):
+        self.assertEqual(str, type(User.password))
+
+    def test_first_nametype(self):
+        self.assertEqual(str, type(User.first_name))
+
+    def test_last_nametype(self):
+        self.assertEqual(str, type(User.last_name))
+
+    def test_two_model_id(self):
+        my_model0 = User()
+        my_model1 = User()
+        self.assertNotEqual(my_model0.id, my_model1.id)
+
+    def test_created_at(self):
+        my_model0 = User()
+        time.sleep(1)
+        my_model1 = User()
+        self.assertLess(my_model0.created_at, my_model1.created_at)
 
 
 if __name__ == '__main__':
