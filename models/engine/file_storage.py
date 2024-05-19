@@ -1,6 +1,13 @@
 #!/usr/bin/python3
 """Defines the FileStorage class."""
 import json
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage:
@@ -30,7 +37,6 @@ class FileStorage:
             obj: Object to be added to storage.
             It must have an attribute named 'id'.
         """
-
         class_name = obj.__class__.__name__
         obj_id = obj.id
         key = f"{class_name}.{obj_id}"
@@ -40,32 +46,26 @@ class FileStorage:
         """
         Serializes __objects to JSON file.
         """
-        serialized_objs = {key: value.to_dict() for key,
-                           value in self.__objects.items()}
+        serialized_objs = {key: value.to_dict() for key, value in FileStorage.__objects.items()}
         with open(FileStorage.__file_path, "w") as file:
             json.dump(serialized_objs, file)
 
     def reload(self):
         """
-        deserializes the JSON file to __objects :
-        - file.json => BaseModel(args) => self.new()
-        - convert the loaded json to BaseModel(args)
-          object to call self.new to add to the __objects
+        Deserializes the JSON file to __objects:
+        - Reads file.json and converts its content to objects
+        - Calls self.new() to add each object to the __objects dictionary
         """
         try:
-            with open(self.__file_path, "r") as f:
+            with open(FileStorage.__file_path, "r") as f:
                 content = json.load(f)
                 for k, v in content.items():
-                    # get the class name
-                    classn = v["__class__"]
-                    # delete the __class__ attribute becasue
-                    # it going to created in self.new
-                    del v["__class__"]
-                    # eval and **v to excute as:
-                    # classname(key=value, key=value,...)
-                    classn = classn + "(**v)"
-                    my_model = eval(classn)
-                    self.new(my_model)
+                    class_name = v["__class__"]
+                    # Reconstruct the object
+                    class_obj = eval(class_name)(**v)
+                    self.new(class_obj)
         except FileNotFoundError:
-            return
-    # end def
+            # If the file doesn't exist, just return
+            pass
+
+    # Error: fixed the indentation
