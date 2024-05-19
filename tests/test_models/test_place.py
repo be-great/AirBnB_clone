@@ -160,6 +160,9 @@ class TestPlace(unittest.TestCase):
         my_model1 = Place()
         self.assertLess(my_model0.created_at, my_model1.created_at)
 
+    """-----------------Filestorage-------------------"""
+    """-------------------------------------------------"""
+
 
 if __name__ == '__main__':
     unittest.main()
