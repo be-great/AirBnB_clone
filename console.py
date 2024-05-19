@@ -156,7 +156,7 @@ class HBNBCommand(cmd.Cmd):
                                                                 idArg,
                                                                 attrName,
                                                                 attrValue))
-        print("*** Unknown syntax: {}".format(parts))
+        print("*** Unknown syntax: {}".format(arg))
         return False
 
     def do_quit(self, arg):
