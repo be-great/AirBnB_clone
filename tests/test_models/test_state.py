@@ -1,6 +1,8 @@
 import unittest
 from models.state import State
 from datetime import datetime
+import models
+import time
 
 
 class TestState(unittest.TestCase):
@@ -93,6 +95,29 @@ class TestState(unittest.TestCase):
         self.assertIsInstance(state.created_at, datetime)
         self.assertIsInstance(state.updated_at, datetime)
         self.assertIsInstance(state.name, str)
+
+    def test_to_dicttype(self):
+        self.assertTrue(dict, type(State().to_dict()))
+
+    def test_new_instance_stored_in_objects(self):
+        self.assertIn(State(), models.storage.all().values())
+
+    def test_idtype(self):
+        self.assertEqual(str, type(State().id))
+
+    def test_nametype(self):
+        self.assertEqual(str, type(State.name))
+
+    def test_two_model_id(self):
+        my_model0 = State()
+        my_model1 = State()
+        self.assertNotEqual(my_model0.id, my_model1.id)
+
+    def test_created_at(self):
+        my_model0 = State()
+        time.sleep(1)
+        my_model1 = State()
+        self.assertLess(my_model0.created_at, my_model1.created_at)
 
 
 if __name__ == '__main__':

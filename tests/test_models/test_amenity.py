@@ -1,6 +1,8 @@
 import unittest
 from models.amenity import Amenity
 from datetime import datetime
+import models
+import time
 
 
 class TestAmenity(unittest.TestCase):
@@ -72,6 +74,28 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(amenity.name, "Gym")
 
     # Add more test cases as needed...
+    def test_to_dicttype(self):
+        self.assertTrue(dict, type(Amenity().to_dict()))
+
+    def test_new_instance_stored_in_objects(self):
+        self.assertIn(Amenity(), models.storage.all().values())
+
+    def test_idtype(self):
+        self.assertEqual(str, type(Amenity().id))
+
+    def test_nametype(self):
+        self.assertEqual(str, type(Amenity.name))
+
+    def test_two_model_id(self):
+        my_model0 = Amenity()
+        my_model1 = Amenity()
+        self.assertNotEqual(my_model0.id, my_model1.id)
+
+    def test_created_at(self):
+        my_model0 = Amenity()
+        time.sleep(1)
+        my_model1 = Amenity()
+        self.assertLess(my_model0.created_at, my_model1.created_at)
 
 
 if __name__ == '__main__':

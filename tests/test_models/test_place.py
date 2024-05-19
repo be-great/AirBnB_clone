@@ -2,6 +2,8 @@ import unittest
 from models.place import Place
 from datetime import datetime
 import json
+import models
+import time
 
 
 class TestPlace(unittest.TestCase):
@@ -104,6 +106,59 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place.latitude, 123.456)
         self.assertEqual(place.longitude, -78.90)
         self.assertEqual(place.amenity_ids, ['123', '456'])
+
+    def test_to_dicttype(self):
+        self.assertTrue(dict, type(Place().to_dict()))
+
+    def test_new_instance_stored_in_objects(self):
+        self.assertIn(Place(), models.storage.all().values())
+
+    def test_idtype(self):
+        self.assertEqual(str, type(Place().id))
+
+    def test_city_idtype(self):
+        self.assertEqual(str, type(Place.city_id))
+
+    def test_user_idtype(self):
+        self.assertEqual(str, type(Place.user_id))
+
+    def test_nametype(self):
+        self.assertEqual(str, type(Place.name))
+
+    def test_descriptiontype(self):
+        self.assertEqual(str, type(Place.description))
+
+    def test_number_roomstype(self):
+        self.assertEqual(int, type(Place.number_rooms))
+
+    def test_number_bathroomstype(self):
+        self.assertEqual(int, type(Place.number_bathrooms))
+
+    def test_max_guesttype(self):
+        self.assertEqual(int, type(Place.max_guest))
+
+    def test_price_by_nighttype(self):
+        self.assertEqual(int, type(Place.price_by_night))
+
+    def test_latitudetype(self):
+        self.assertEqual(float, type(Place.latitude))
+
+    def test_longitudetype(self):
+        self.assertEqual(float, type(Place.longitude))
+
+    def test_amenity_idstype(self):
+        self.assertEqual(list, type(Place.amenity_ids))
+
+    def test_two_model_id(self):
+        my_model0 = Place()
+        my_model1 = Place()
+        self.assertNotEqual(my_model0.id, my_model1.id)
+
+    def test_created_at(self):
+        my_model0 = Place()
+        time.sleep(1)
+        my_model1 = Place()
+        self.assertLess(my_model0.created_at, my_model1.created_at)
 
 
 if __name__ == '__main__':
