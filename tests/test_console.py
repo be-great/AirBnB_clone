@@ -297,5 +297,60 @@ class TestHBNBCommandAll(unittest.TestCase):
         self.assertIn(f"BaseModel.{obj.id}", mock_stdout.getvalue())
 
 
+class TestHBNBCommandUpdate(unittest.TestCase):
+    """Tests the update command of HBNBCommand."""
+
+    def setUp(self):
+        """Set up test environment"""
+        self.console = HBNBCommand()
+
+    def tearDown(self):
+        """Tear down test environment"""
+        storage._FileStorage__objects.clear()
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_update_no_class_name(self, mock_stdout):
+        self.console.onecmd("update")
+        self.assertEqual(mock_stdout.getvalue(), "** class name missing **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_update_invalid_class_name(self, mock_stdout):
+        self.console.onecmd("update InvalidClass")
+        self.assertEqual(mock_stdout.getvalue(), "** class doesn't exist **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_update_no_instance_id(self, mock_stdout):
+        self.console.onecmd("update BaseModel")
+        self.assertEqual(mock_stdout.getvalue(), "** instance id missing **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_update_instance_not_found(self, mock_stdout):
+        self.console.onecmd("update BaseModel 1234")
+        self.assertEqual(mock_stdout.getvalue(), "** no instance found **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_update_no_attribute_name(self, mock_stdout):
+        obj = BaseModel()
+        obj.save()
+        self.console.onecmd(f"update BaseModel {obj.id}")
+        self.assertEqual(mock_stdout.getvalue(),
+                         "** attribute name missing **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_update_no_attribute_value(self, mock_stdout):
+        obj = BaseModel()
+        obj.save()
+        self.console.onecmd(f"update BaseModel {obj.id} name")
+        self.assertEqual(mock_stdout.getvalue(), "** value missing **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_update_valid(self, mock_stdout):
+        obj = BaseModel()
+        obj.save()
+        self.console.onecmd(f"update BaseModel {obj.id} name \"TestName\"")
+        self.assertEqual(getattr(storage.all()
+                                 [f"BaseModel.{obj.id}"], "name"), "TestName")
+
+
 if __name__ == '__main__':
     unittest.main()
