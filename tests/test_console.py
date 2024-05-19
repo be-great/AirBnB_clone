@@ -144,3 +144,37 @@ class TestHBNBCommand_help(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help"))
             self.assertEqual(h, output.getvalue().strip())
+
+
+class TestHBNBCommandCreate(unittest.TestCase):
+    """     Test create command of HBNBCommand   """
+    """-------------------------------------------"""
+
+    def setUp(self):
+        """Set up test environment."""
+        self.console = HBNBCommand()
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_create_no_class_name(self, mock_stdout):
+        """Test create command with no class name."""
+        self.console.onecmd("create")
+        self.assertIn("** class name missing **", mock_stdout.getvalue().strip())
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_create_invalid_class_name(self, mock_stdout):
+        """Test create command with an invalid class name."""
+        self.console.onecmd("create NonExistentClass")
+        self.assertIn("** class doesn't exist **", mock_stdout.getvalue().strip())
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_create_valid_class_name(self, mock_stdout):
+        """Test create command with a valid class name."""
+        self.console.onecmd("create BaseModel")
+        output = mock_stdout.getvalue().strip()
+        self.assertTrue(len(output) > 0)
+        self.assertNotIn("** class doesn't exist **", output)
+        self.assertNotIn("** class name missing **", output)
+
+
+if __name__ == '__main__':
+    unittest.main()
