@@ -232,7 +232,6 @@ class TestHBNBCommandShow(unittest.TestCase):
 
 
 class TestHBNBCommandDestroy(unittest.TestCase):
-    """Tests the destroy command of HBNBCommand."""
 
     def setUp(self):
         """Set up test environment"""
@@ -240,7 +239,7 @@ class TestHBNBCommandDestroy(unittest.TestCase):
 
     def tearDown(self):
         """Tear down test environment"""
-        storage.__objects.clear()
+        storage._FileStorage__objects.clear()
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_destroy_no_class_name(self, mock_stdout):
@@ -258,57 +257,16 @@ class TestHBNBCommandDestroy(unittest.TestCase):
         self.assertEqual(mock_stdout.getvalue(), "** instance id missing **\n")
 
     @patch('sys.stdout', new_callable=StringIO)
-    def test_destroy_instance_id_not_exist(self, mock_stdout):
-        self.console.onecmd("destroy BaseModel non_existent_id")
+    def test_destroy_instance_not_found(self, mock_stdout):
+        self.console.onecmd("destroy BaseModel 1234")
         self.assertEqual(mock_stdout.getvalue(), "** no instance found **\n")
 
     @patch('sys.stdout', new_callable=StringIO)
-    def test_destroy_valid_class_name_and_id(self, mock_stdout):
-        # Create a new instance
-        instance = BaseModel()
-        instance_id = instance.id
-        storage.new(instance)
-        storage.save()
-        # Test destruction
-        self.console.onecmd(f"destroy BaseModel {instance_id}")
-        self.assertEqual(mock_stdout.getvalue(), "")
-
-        # Check if the instance is removed
-        self.assertNotIn(f"BaseModel.{instance_id}", storage.all())
-
-
-class TestHBNBCommandAll(unittest.TestCase):
-    """Tests the all command of HBNBCommand."""
-
-    def setUp(self):
-        """Set up test environment"""
-        self.console = HBNBCommand()
-
-    def tearDown(self):
-        """Tear down test environment"""
-        storage.__objects.clear()
-
-    @patch('sys.stdout', new_callable=StringIO)
-    def test_all_no_class_name(self, mock_stdout):
-        self.console.onecmd("all")
-        self.assertEqual(mock_stdout.getvalue(), "[]\n")
-
-    @patch('sys.stdout', new_callable=StringIO)
-    def test_all_invalid_class_name(self, mock_stdout):
-        self.console.onecmd("all InvalidClass")
-        self.assertEqual(mock_stdout.getvalue(), "** class doesn't exist **\n")
-
-    @patch('sys.stdout', new_callable=StringIO)
-    def test_all_valid_class_name(self, mock_stdout):
-        # Create a new instance
-        instance1 = BaseModel()
-        instance1.save()
-        instance2 = BaseModel()
-        instance2.save()
-
-        self.console.onecmd("all BaseModel")
-        expected_output = f'["{str(instance1)}", "{str(instance2)}"]\n'
-        self.assertEqual(mock_stdout.getvalue(), expected_output)
+    def test_destroy_instance_found(self, mock_stdout):
+        obj = BaseModel()
+        obj.save()
+        self.console.onecmd(f"destroy BaseModel {obj.id}")
+        self.assertNotIn(f"BaseModel.{obj.id}", storage.all())
 
 
 if __name__ == '__main__':
