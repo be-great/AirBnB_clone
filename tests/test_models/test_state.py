@@ -119,8 +119,19 @@ class TestState(unittest.TestCase):
         my_model1 = State()
         self.assertLess(my_model0.created_at, my_model1.created_at)
 
-    """-----------------Filestorage-------------------"""
+    """-----------------save-------------------"""
     """-------------------------------------------------"""
+    def test_one_save(self):
+        my_model = State()
+        time.sleep(1)
+        update_ = my_model.updated_at
+        my_model.save()
+        self.assertLess(update_, my_model.updated_at)
+
+    def test_save_instance_witharg(self):
+        my_model = State()
+        with self.assertRaises(TypeError):
+            my_model.save(None)
 
 
 if __name__ == '__main__':
