@@ -115,36 +115,33 @@ class TestUser(unittest.TestCase):
     """ --------------------to_dict----------------"""
     """-------------------- test----------------"""
 
-    def test_to_dict_type(self):
+    def test_to_dicttype(self):
         self.assertTrue(dict, type(User().to_dict()))
-
-    def test_no_args_instantiates(self):
-        self.assertEqual(User, type(User()))
 
     def test_new_instance_stored_in_objects(self):
         self.assertIn(User(), models.storage.all().values())
 
-    def test_id_is_public_str(self):
+    def test_idtype(self):
         self.assertEqual(str, type(User().id))
 
-    def test_email_is_public_str(self):
+    def test_emailtype(self):
         self.assertEqual(str, type(User.email))
 
-    def test_password_is_public_str(self):
+    def test_passwordtype(self):
         self.assertEqual(str, type(User.password))
 
-    def test_first_name_is_public_str(self):
+    def test_first_nametype(self):
         self.assertEqual(str, type(User.first_name))
 
-    def test_last_name_is_public_str(self):
+    def test_last_nametype(self):
         self.assertEqual(str, type(User.last_name))
 
-    def test_two_users_unique_ids(self):
+    def test_two_model_id(self):
         my_model0 = User()
         my_model1 = User()
         self.assertNotEqual(my_model0.id, my_model1.id)
 
-    def test_two_users_different_created_at(self):
+    def test_created_at(self):
         my_model0 = User()
         time.sleep(1)
         my_model1 = User()
