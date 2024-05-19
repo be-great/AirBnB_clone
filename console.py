@@ -156,6 +156,35 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, arg):
+        """
+    Print all string representations of objects or all objects of a specified \
+    class.
+
+    Args:
+        arg (str): The argument passed to the command. If provided, it should \
+        contain the class name
+                   for which objects need to be printed.
+
+    Returns:
+        None
+
+    Prints:
+        If the argument is provided and valid (i.e., class name exists):
+            - Prints a list of string representations of all objects of the \
+            specified class.
+        If the argument is not provided or invalid:
+            - Prints a list of string representations of all objects across \
+            all classes.
+            - If the specified class does not exist, prints an error message.
+
+    Example Usage:
+        (hbnb) all
+            [String representation of all objects across all classes]
+        (hbnb) all BaseModel
+            [String representation of all objects of class BaseModel]
+        (hbnb) all NonExistentClass
+            ** class doesn't exist **
+    """
 
         arguments = arg.split()
         list = []
