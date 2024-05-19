@@ -67,6 +67,6 @@ class FileStorage:
                     self.new(class_obj)
         except FileNotFoundError:
             # If the file doesn't exist, just return
-            pass
+            return
 
     # Error: fixed the indentation
