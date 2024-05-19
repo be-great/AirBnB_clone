@@ -121,17 +121,12 @@ class TestState(unittest.TestCase):
 
     """-----------------save-------------------"""
     """-------------------------------------------------"""
-    def test_one_save(self):
-        my_model = State()
-        time.sleep(1)
-        update_ = my_model.updated_at
-        my_model.save()
-        self.assertLess(update_, my_model.updated_at)
-
-    def test_save_instance_witharg(self):
-        my_model = State()
-        with self.assertRaises(TypeError):
-            my_model.save(None)
+    def test_save_updates_file(self):
+        st = State()
+        st.save()
+        stid = "State." + st.id
+        with open("file.json", "r") as f:
+            self.assertIn(stid, f.read())
 
 
 if __name__ == '__main__':
