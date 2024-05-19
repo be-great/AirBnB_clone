@@ -231,5 +231,43 @@ class TestHBNBCommandShow(unittest.TestCase):
         self.assertIn(f"'id': '{self.model.id}'", output)
 
 
+class TestHBNBCommandDestroy(unittest.TestCase):
+
+    def setUp(self):
+        """Set up test environment"""
+        self.console = HBNBCommand()
+
+    def tearDown(self):
+        """Tear down test environment"""
+        storage._FileStorage__objects.clear()
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_destroy_no_class_name(self, mock_stdout):
+        self.console.onecmd("destroy")
+        self.assertEqual(mock_stdout.getvalue(), "** class name missing **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_destroy_invalid_class_name(self, mock_stdout):
+        self.console.onecmd("destroy InvalidClass")
+        self.assertEqual(mock_stdout.getvalue(), "** class doesn't exist **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_destroy_no_instance_id(self, mock_stdout):
+        self.console.onecmd("destroy BaseModel")
+        self.assertEqual(mock_stdout.getvalue(), "** instance id missing **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_destroy_instance_not_found(self, mock_stdout):
+        self.console.onecmd("destroy BaseModel 1234")
+        self.assertEqual(mock_stdout.getvalue(), "** no instance found **\n")
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_destroy_instance_found(self, mock_stdout):
+        obj = BaseModel()
+        obj.save()
+        self.console.onecmd(f"destroy BaseModel {obj.id}")
+        self.assertNotIn(f"BaseModel.{obj.id}", storage.all())
+
+
 if __name__ == '__main__':
     unittest.main()
