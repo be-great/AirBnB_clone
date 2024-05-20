@@ -261,41 +261,41 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """Retrieve all instances or instances of a specific class."""
-        argl = parsing(arg)
-        objdict = storage.all()
+        arguments = parsing(arg)
+        objs = storage.all()
 
-        if len(argl) == 0:
+        if len(arguments) < 1:
             print("** class name missing **")
             return False
-        if argl[0] not in self.__classnames:
+        if arguments[0] not in self.__classnames:
             print("** class doesn't exist **")
             return False
-        if len(argl) == 1:
+        if len(arguments) < 2:
             print("** instance id missing **")
             return False
-        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+        if "{}.{}".format(arguments[0], arguments[1]) not in objs.keys():
             print("** no instance found **")
             return False
-        if len(argl) == 2:
+        if len(arguments) < 3:
             print("** attribute name missing **")
             return False
-        if len(argl) == 3:
+        if len(arguments) < 4:
             try:
-                type(eval(argl[2])) != dict
+                type(eval(arguments[2])) != dict
             except NameError:
                 print("** value missing **")
                 return False
 
-        if len(argl) == 4:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            if argl[2] in obj.__class__.__dict__.keys():
-                valtype = type(obj.__class__.__dict__[argl[2]])
-                obj.__dict__[argl[2]] = valtype(argl[3])
+        if len(arguments) < 5:
+            obj = objs["{}.{}".format(arguments[0], arguments[1])]
+            if arguments[2] in obj.__class__.__dict__.keys():
+                valtype = type(obj.__class__.__dict__[arguments[2]])
+                obj.__dict__[arguments[2]] = valtype(arguments[3])
             else:
-                obj.__dict__[argl[2]] = argl[3]
-        elif type(eval(argl[2])) == dict:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            for k, v in eval(argl[2]).items():
+                obj.__dict__[arguments[2]] = arguments[3]
+        elif type(eval(arguments[2])) == dict:
+            obj = objs["{}.{}".format(arguments[0], arguments[1])]
+            for k, v in eval(arguments[2]).items():
                 if (k in obj.__class__.__dict__.keys() and
                         type(obj.__class__.__dict__[k]) in {str, int, float}):
                     valtype = type(obj.__class__.__dict__[k])
