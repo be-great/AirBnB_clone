@@ -14,26 +14,6 @@ from shlex import split
 from models import storage
 
 
-def parsing(arg):
-    # handle the arguments
-    braces = re.search(r"\{(.*?)\}", arg)
-    brackets = re.search(r"\[(.*?)\]", arg)
-    if braces is None:
-        if brackets is None:
-            arr = [i.strip(",") for i in split(arg)]
-            return arr
-        else:
-            tmp = split(arg[:brackets.span()[0]])
-            arr = [i.strip(",") for i in tmp]
-            arr.append(brackets.group())
-            return arr
-    else:
-        tmp = split(arg[:braces.span()[0]])
-        arr = [i.strip(",") for i in tmp]
-        arr.append(braces.group())
-        return arr
-
-
 def deleteObjectById(id):
     """
     Delete an object from storage by its ID.
@@ -260,49 +240,31 @@ class HBNBCommand(cmd.Cmd):
             print(list)
 
     def do_update(self, arg):
-        """Retrieve all instances or instances of a specific class."""
-        arguments = parsing(arg)
-        objs = storage.all()
-
+        """
+    Retrieve all instances or instances of a specific class.
+    """
+        arguments = arg.split()
         if len(arguments) < 1:
             print("** class name missing **")
-            return False
-        if arguments[0] not in self.__classnames:
+        elif arguments[0] not in self.__classnames:
             print("** class doesn't exist **")
-            return False
-        if len(arguments) < 2:
+        elif len(arguments) < 2:
             print("** instance id missing **")
-            return False
-        if "{}.{}".format(arguments[0], arguments[1]) not in objs.keys():
-            print("** no instance found **")
-            return False
-        if len(arguments) < 3:
-            print("** attribute name missing **")
-            return False
-        if len(arguments) < 4:
-            try:
-                type(eval(arguments[2])) != dict
-            except NameError:
+        else:
+            my_model = findObjectById(arguments[1])
+            if my_model is None:
+                print("** no instance found **")
+            elif len(arguments) < 3:
+                print("** attribute name missing **")
+            elif len(arguments) < 4:
                 print("** value missing **")
-                return False
-
-        if len(arguments) < 5:
-            obj = objs["{}.{}".format(arguments[0], arguments[1])]
-            if arguments[2] in obj.__class__.__dict__.keys():
-                valtype = type(obj.__class__.__dict__[arguments[2]])
-                obj.__dict__[arguments[2]] = valtype(arguments[3])
             else:
-                obj.__dict__[arguments[2]] = arguments[3]
-        elif type(eval(arguments[2])) == dict:
-            obj = objs["{}.{}".format(arguments[0], arguments[1])]
-            for k, v in eval(arguments[2]).items():
-                if (k in obj.__class__.__dict__.keys() and
-                        type(obj.__class__.__dict__[k]) in {str, int, float}):
-                    valtype = type(obj.__class__.__dict__[k])
-                    obj.__dict__[k] = valtype(v)
-                else:
-                    obj.__dict__[k] = v
-        storage.save()
+                all_objs = storage.all()
+                for obj_id in all_objs.keys():
+                    obj = all_objs[obj_id]
+                    if (obj.to_dict())["id"] == arguments[1]:
+                        setattr(obj, arguments[2], arguments[3][1:-1])
+                        obj.save()
 
     def do_count(self, arg):
         """
