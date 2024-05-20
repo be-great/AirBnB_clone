@@ -264,28 +264,28 @@ class HBNBCommand(cmd.Cmd):
         arguments = parsing(arg)
         objs = storage.all()
 
-        if len(arguments) < 1:
+        if len(arguments) == 0:
             print("** class name missing **")
             return False
         if arguments[0] not in self.__classnames:
             print("** class doesn't exist **")
             return False
-        if len(arguments) < 2:
+        if len(arguments) == 1:
             print("** instance id missing **")
             return False
         if "{}.{}".format(arguments[0], arguments[1]) not in objs.keys():
             print("** no instance found **")
             return False
-        if len(arguments) < 3:
+        if len(arguments) == 2:
             print("** attribute name missing **")
             return False
-        if len(arguments) < 4:
+        if len(arguments) == 3:
             try:
                 type(eval(arguments[2])) != dict
             except NameError:
                 print("** value missing **")
                 return False
-        if len(arguments) < 5:
+        if len(arguments) == 4:
             obj = objs["{}.{}".format(arguments[0], arguments[1])]
             if arguments[2] in obj.__class__.__dict__.keys():
                 valtype = type(obj.__class__.__dict__[arguments[2]])
