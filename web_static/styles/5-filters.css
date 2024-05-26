@@ -5,14 +5,13 @@
     width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     text-align: right;
 }
 section.filters button
 {
 
+    margin-top: 11px;
+    margin-bottom: 11px;
     font-size: 18px;
     background-color:#FF5A5F;
     color:#FFFFFF ;
@@ -32,30 +31,36 @@ section.filters button:hover
 
 .locations
 {
+    
+    text-align: left;
     height: 100%;
     width: 25%;
-    border-right: 1px #DDDDDD solid;
-    text-align: left;
-    left: 0;
+    border-right: solid 1px #DDDDDD;
+    margin-left: 30px;
+    float: left;
+    
+
 }
 .amenities
 {
+    text-align: left;
     height: 100%;
     width: 25%;
-    padding-left: 40px;
-    text-align: left;
+    margin-left: 30px;
+    float: left;
+
 }
 h3
 {
+    margin: 0px;
+    padding: 0px;
     font-weight: 600;
-    margin: 11;
-    padding: 0;
-
+    margin-top: 17px;
 }
 h4
 {
     font-weight: 400;
     font-size: 14px;
-    margin: 11;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
 }
