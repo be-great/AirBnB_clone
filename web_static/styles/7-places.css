@@ -1,0 +1,39 @@
+.places {
+    position: relative;
+    top: 30px;
+    padding-top: 50px; /* Ensure space for the title */
+}
+
+.places .title_p {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.places .title_p h1 {
+    font-size: 30px;
+    margin: 0;
+}
+
+.places .list_p
+{
+    display: flex; /*flew for vertical layout*/
+    flex-wrap: wrap; /* if screen don't fit go to next line*/
+    gap: 20px;
+}
+.places .list_p article
+{
+    width: 390px;
+    padding: 20px;
+    margin: 20px;
+    border:  1px #FF5A5F solid;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+    text-align: center; /* Centers the content horizontally */
+    
+}
+.list_p article h2
+{
+    font-size: 30px;
+    margin: 0;
+}
