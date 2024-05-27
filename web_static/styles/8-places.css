@@ -1,10 +1,9 @@
-
 .places {
     position: relative;
     top: 30px;
     padding-top: 50px; /* Ensure space for the title */
+    margin-bottom: 130px; /* Adjusted margin to accommodate footer */
 }
-
 .places .title_p {
     position: absolute;
     top: 0;
@@ -120,4 +119,14 @@ align-items: center
 .description {
     margin-top: 10px;
     text-align: left; /* Ensure description text is aligned left */
+}
+footer {
+    background-color: #FFFFFF;
+    height: 60px;
+    width: 100%;
+    border-top: 1px solid #CCCCCC;
+    position: fixed; /* Change from absolute to fixed */
+    bottom: 0;
+    text-align: center;
+    line-height: 60px; /* Adjusted line-height */
 }

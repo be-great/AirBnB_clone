@@ -73,8 +73,11 @@ h4
     background-color: #FAFAFA;
     border: solid #DDDDDD 1px;
     border-radius: 4px;
-    margin-top: 8%;
+    margin-top: 6.7%;
     padding-bottom: 10%;
+    width: calc(94.95% + 1px); /* Adjusted width to include the border */
+    left: -30px; /* Shift the popover box to the left to align with container border */
+    z-index: 1; /*to display above other elements*/
 }
 .popover li h2{
     padding: 0;
