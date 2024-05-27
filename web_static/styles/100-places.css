@@ -1,0 +1,186 @@
+.places {
+    position: relative;
+    top: 30px;
+    padding-top: 50px; /* Ensure space for the title */
+    margin-bottom: 130px; /* Adjusted margin to accommodate footer */
+}
+.places .title_p {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.places .title_p h1 {
+    font-size: 30px;
+    margin: 0;
+}
+
+.places .list_p
+{
+    display: flex; /*flew for vertical layout*/
+    flex-wrap: wrap; /* if screen don't fit go to next line*/
+    gap: 20px;
+}
+.places .list_p article
+{
+    width: 390px;
+    padding: 20px;
+    margin: 20px;
+    border:  1px #FF5A5F solid;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+    text-align: center; /* Centers the content horizontally */
+}
+.list_p article h2
+{
+    font-size: 30px;
+    margin: 0;
+    text-align: center;
+}
+
+.price_title
+{
+position: relative;
+display: flex;
+flex-direction: column;
+align-items: center
+}
+.price_by_night
+{
+    color: #FF5A5F;
+    border: 4px solid #FF5A5F;
+    border-radius: 40px;
+    min-width: 60px;
+    height: 60px;
+    font-size: 30px;
+    margin-top: -37px; /* Adjust for spacing from the top */
+    margin-left: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+}
+.information
+{
+    height: 80px;
+    margin-top: 20px;
+    border-top: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.information > div
+{
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+._icon
+{
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+}
+
+.max_guest ._icon
+{
+    background-image: url("../images/icon_group.png");
+}
+
+.number_rooms ._icon
+{
+    background-image: url("../images/icon_bed.png");
+}
+
+.number_bathrooms ._icon
+{
+    background-image: url("../images/icon_bath.png");
+}
+
+._number
+{
+    font-size: 14px;
+}
+.user {
+    text-align: left;
+    padding-left: 0px;
+    margin-top: 10px;
+    line-height: 1.5; /* Adjust as needed for consistent spacing */
+}
+
+.user b {
+    margin: 0; /* Reset margins for the bold element */
+}
+
+.description {
+    margin-top: 10px;
+    text-align: left; /* Ensure description text is aligned left */
+}
+footer {
+    background-color: #FFFFFF;
+    height: 60px;
+    width: 100%;
+    border-top: 1px solid #CCCCCC;
+    position: fixed; /* Change from absolute to fixed */
+    bottom: 0;
+    text-align: center;
+    line-height: 60px; /* Adjusted line-height */
+}
+
+.list_p .amenities
+{
+    margin-top: 20px;
+    margin-left: 0px;    
+}
+.list_p .amenities h2
+{
+    font-size: 16px;
+    margin: 0; /*remove default margins*/
+    border-bottom: 1px solid #DDDDDD;
+
+}
+.list_p .amenities_list
+{
+    list-style-type: none; /* Remove default list styles */
+    padding-left: 0; /* Remove default padding */
+}
+
+.list_p .amenities_list li
+{
+    padding-top: 0px;
+    padding-left: 24px; /* Add padding to create space for the icon */
+    position: relative; /* Position the icon */
+}
+
+.list_p .amenities_list li::before
+{
+    content: ""; /* Add content to the pseudo-element */
+    position: absolute; /* Position the icon */
+    left: 0; /* Align the icon to the left */
+    top: 50%; /* Align the icon vertically */
+    transform: translateY(-50%); /* Center the icon vertically */
+    width: 16px; /* Set the width of the icon */
+    height: 16px; /* Set the height of the icon */
+    background-size: contain; /* Ensure the icon fits within the space */
+    background-repeat: no-repeat; /* Prevent the icon from repeating */
+    margin-right: 8px; /* Add spacing between the icon and text */
+}
+
+.list_p .amenities_list li:nth-child(1)::before
+{
+    background-image: url("../images/icon_tv.png"); /* Add the path to your first icon image */
+}
+
+.list_p .amenities_list li:nth-child(2)::before
+{
+    background-image: url("../images/icon_wifi.png"); /* Add the path to your second icon image */
+}
+
+.list_p .amenities_list li:nth-child(3)::before
+{
+    background-image: url("../images/icon_pets.png"); /* Add the path to your third icon image */
+}
